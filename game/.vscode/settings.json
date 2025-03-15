@@ -1,0 +1,12 @@
+{
+    "Lua.diagnostics.globals": [
+        "love",
+        "product_config",
+        "https"
+    ],
+    "Lua.diagnostics.disable": [
+        "inject-field",
+        "undefined-field",
+        "undefined-doc-name"
+    ]
+}
