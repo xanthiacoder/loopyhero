@@ -4,18 +4,18 @@
     name = "", -- char name
     race = "", -- Aarakocran, Beastkin, Centaur, Drow, Duergar, Dwarf, Elf, Githyanki, Gnoll, Gnome, Goblin, Half Elf, Halfling, Human, Lizard Man, Merfolk, Mindflayer, Ogre, Orc, Pixie, Svirfneblin, Tiefling
     gender = "", -- male / female
-    str = 0, -- strength
-    maxstr = 0,
-    int = 0, -- intelligence
-    maxint = 0,
-    dex = 0, -- dexterity
-    maxdex = 0,
-    con = 0, -- constitution
-    maxcon = 0,
-    cha = 0, -- charisma
-    maxcha = 0,
-    wis = 0, -- wisdom
-    maxwis = 0,
+    str = 3, -- strength
+    maxstr = 18,
+    int = 3, -- intelligence
+    maxint = 18,
+    dex = 3, -- dexterity
+    maxdex = 18,
+    con = 3, -- constitution
+    maxcon = 18,
+    cha = 3, -- charisma
+    maxcha = 18,
+    wis = 3, -- wisdom
+    maxwis = 18,
     class = "", -- base class (Apprentice, Bard, Cleric, Druid, Fighter, Mage, or Thief)
     atk = 0, -- attack points
     dmg = 0, -- damage points
@@ -31,6 +31,8 @@
     inclination = "",
     height = 0,
     weight = 0,
+    xp = 0, -- experience points
+    xpgain = 100, -- earned experience rate in percentage
   }
 
   local charAbilites = {
@@ -95,6 +97,32 @@
     [22] = "Tieflings are mortal beings who have a trace of demon heritage, granting them distinguished features including hornes, wings and a tail. Tiefling are universally distrusted due to their ancestry and tendency to fall upon the wicked ways of demons.",
   }
 
+
+local racesBonus = {
+--        str, maxstr, int, maxint, dex, maxdex, con, maxcon, cha, maxcha, wis, maxwis, xpgain
+  [1]  = {  0,      0,   0,      0,   2,      2,  -1,     -1,  -1,     -1,   0,      0,      0 },
+  [2]  = {  0,      0,   0,      0,   1,      1,   2,      2,  -1,     -1,  -2,     -2,      0 },
+  [3]  = {  1,      1,   1,      1,   0,      0,   0,      0,  -1,      1,  -1,      1,      0 },
+  [4]  = {  0,      0,   1,      1,   3,      3,  -4,      1,  -3,      1,   0,      0,      0 },
+  [5]  = {  0,      0,   0,      0,   0,      0,   1,      1,  -4,      1,   0,      0,      0 },
+  [6]  = {  0,      0,   0,      0,   0,      0,   1,      1,  -1,      1,   0,      0,      0 },
+  [7]  = {  0,      0,   0,      0,   1,      1,  -1,      1,   0,      0,   0,      0,      0 },
+  [8]  = {  0,      0,   0,      0,   1,      1,   0,      0,   0,      0,   1,      1,    -20 },
+  [9]  = {  2,      2,  -3,      1,   0,      0,   0,      0,   0,      0,  -2,      1,      0 },
+  [10] = {  0,      0,   1,      1,   0,      0,   0,      0,   0,      0,  -1,      1,      5 },
+  [11] = { -1,      1,   1,      1,   2,      2,   0,      0,  -1,      1,  -1,      1,      0 },
+  [12] = {  0,      0,   0,      0,   0,      0,   0,      0,   0,      0,   0,      0,      0 },
+  [13] = { -1,      1,   0,      0,   1,      1,   0,      0,   0,      0,   0,      0,      0 },
+  [14] = {  0,      0,   0,      0,   0,      0,   0,      0,   0,      0,   0,      0,      0 },
+  [15] = {  1,      1,  -1,      1,   0,      0,   1,      1,  -1,      1,   0,      0,      0 },
+  [16] = {  0,      0,   0,      0,   2,      2,   0,      0,   0,      0,  -2,      1,      0 },
+  [17] = { -4,      1,   4,      4,   0,      0,  -2,      1,   2,      2,   0,      0,    -25 },
+  [18] = {  4,      4,  -1,      1,  -2,      1,   0,      0,  -1,      1,   0,      0,      0 },
+  [19] = {  2,      2,  -1,      1,   0,      0,   0,      0,  -1,      1,  -1,      1,      0 },
+  [20] = { -6,      1,   0,      0,   7,      7,  -7,     -7,   2,      2,   0,      0,      0 },
+  [21] = {  2,      2,   1,      1,   0,      0,  -2,      1,   0,      0,  -1,      1,      0 },
+  [22] = {  0,      0,   1,      1,   0,      0,   0,      0,   2,      2,   0,      0,    -20 },
+}
 
 --[[Your stats below reflect your physical and mental gifts.  They can be
 boosted through the use of Training sessions, which are granted at first level,
@@ -172,8 +200,16 @@ local dataString = "" -- input string from user
 local raceEntry = false -- state for race entry
 local raceSelected = 1
 
+local genderEntry = false
+
+local statsEntry = false
+local statPoints = 56 -- points to be distributed among the stats
+
+
 function creationLoad()
 	-- all the one-time things that need to load for title scene
+  game.bgm.creation = love.audio.newSource("bgm/Creation-Baroo.ogg", "stream")
+  game.bgm.creation:setLooping(true)
 end -- titleLoad()
 
 
@@ -189,6 +225,18 @@ function creationInput()
 			titleRun()
 		end
 
+    -- 3rd : gender entry
+    if nameEntry and raceEntry and genderEntry == false then
+      if key == "m" then
+        charData.gender = "Male"
+        genderEntry = true
+      end
+      if key == "f" then
+        charData.gender = "Female"
+        genderEntry = true
+      end
+    end
+
     -- 2nd : race entry
     if nameEntry and charData.race == "" and raceEntry == false then
       if key == "up" and raceSelected > 1 then
@@ -200,6 +248,19 @@ function creationInput()
       if key == "return" then
         raceEntry = true
         charData.race = races[raceSelected]
+        charData.str = charData.str + racesBonus[raceSelected][1]
+        charData.maxstr = charData.maxstr + racesBonus[raceSelected][2]
+        charData.int = charData.int + racesBonus[raceSelected][3]
+        charData.maxint = charData.maxint + racesBonus[raceSelected][4]
+        charData.dex = charData.dex + racesBonus[raceSelected][5]
+        charData.maxdex = charData.maxdex + racesBonus[raceSelected][6]
+        charData.con = charData.con + racesBonus[raceSelected][7]
+        charData.maxcon = charData.maxcon + racesBonus[raceSelected][8]
+        charData.cha = charData.cha + racesBonus[raceSelected][9]
+        charData.maxcha = charData.maxcha + racesBonus[raceSelected][10]
+        charData.wis = charData.wis + racesBonus[raceSelected][11]
+        charData.maxwis = charData.maxwis + racesBonus[raceSelected][12]
+        charData.xpgain = charData.xpgain + racesBonus[raceSelected][13]
       end
     end
 
@@ -213,7 +274,11 @@ function creationInput()
         if key == "backspace" then
           dataString = dataString:sub(1, -2)
         elseif string.byte(key) >= 97 and string.byte(key) <= 122 and #key == 1 and #dataString < 26 then -- single alphabet detected
-          dataString = dataString .. key -- add alphabet to dataString
+          if #dataString == 0 then -- first character, capitalize automatically
+            dataString = dataString .. string.char(string.byte(key)-32)
+          else
+            dataString = dataString .. key -- add alphabet to dataString
+          end
         end
       end
     end
@@ -223,11 +288,11 @@ end -- titleInput
 
 function creationRun()
 	-- anything to run on scene load
-  if game.bgm.title:isPlaying() then
+  if game.bgm.creation:isPlaying() then
     -- do stuff
   else
     love.audio.stop( )
-    game.bgm.title:play()
+    game.bgm.creation:play()
   end
 end -- titleRun
 
@@ -255,10 +320,11 @@ function creationDraw()
   drawTextColor("^wConstitution : ^y"..charData.con.."/"..charData.maxcon, 1, 10,  40, color.black)
   drawTextColor("^wCharisma     : ^y"..charData.cha.."/"..charData.maxcha, 1, 11,  40, color.black)
   drawTextColor("^wWisdom       : ^y"..charData.wis.."/"..charData.maxwis, 1, 12, 40, color.black)
+  drawTextColor("^wXP gain      : ^y"..charData.xpgain.."%", 1, 13, 40, color.black)
 
-  drawTextColor("^wClass       : ^y"..charData.class, 1, 14, 40, color.black)
-  drawTextColor("^wAlignment   : ^y"..charData.alignment, 1, 15, 40, color.black)
-  drawTextColor("^wInclination : ^y"..charData.inclination, 1, 16, 40, color.black)
+  drawTextColor("^wClass        : ^y"..charData.class, 1, 14, 40, color.black)
+  drawTextColor("^wAlignment    : ^y"..charData.alignment, 1, 15, 40, color.black)
+  drawTextColor("^wInclination  : ^y"..charData.inclination, 1, 16, 40, color.black)
 
   drawTextColor("^wHealth   : ^y"..charData.hp.."/"..charData.hpmax, 1, 18, 40, color.black)
   drawTextColor("^wMana     : ^y"..charData.mn.."/"..charData.mnmax, 1, 19, 40, color.black)
@@ -269,6 +335,7 @@ function creationDraw()
 
   drawTextColor("^wPractices : ^y"..charData.pracs, 1, 25, 40, color.black)
   drawTextColor("^wTrains    : ^y"..charData.trains, 1, 26, 40, color.black)
+  drawTextColor("^wXP        : ^y"..charData.xp, 1, 28, 40, color.black)
 
   -- 1st : enter character name
   if charData.name == "" then -- draw dialogbox for dataentry for charData.name
@@ -281,7 +348,25 @@ function creationDraw()
   if charData.name ~= "" and charData.race == "" then
     drawScrollList("", races, "^w[^yUP/DOWN^w] Select Race ", raceSelected, 60, 19, 40, color.brightblue, color.blue)
     drawTextBox(raceDesc[raceSelected], 60, 1, 40, 15, color.white, color.blue, "left")
+
+    drawTextColor("^Wadjusted by:"..racesBonus[raceSelected][1].."/"..racesBonus[raceSelected][2], 22, 7,  18, color.black)
+    drawTextColor("^Wadjusted by:"..racesBonus[raceSelected][3].."/"..racesBonus[raceSelected][4], 22, 8,  18, color.black)
+    drawTextColor("^Wadjusted by:"..racesBonus[raceSelected][5].."/"..racesBonus[raceSelected][6], 22, 9,  18, color.black)
+    drawTextColor("^Wadjusted by:"..racesBonus[raceSelected][7].."/"..racesBonus[raceSelected][8], 22, 10,  18, color.black)
+    drawTextColor("^Wadjusted by:"..racesBonus[raceSelected][9].."/"..racesBonus[raceSelected][10], 22, 11,  18, color.black)
+    drawTextColor("^Wadjusted by:"..racesBonus[raceSelected][11].."/"..racesBonus[raceSelected][12], 22, 12, 18, color.black)
+    drawTextColor("^Wadjusted by:"..racesBonus[raceSelected][13], 22, 13, 18, color.black)
+
   end
+
+    -- 3rd : gender entry
+    if nameEntry and raceEntry and charData.gender == "" then
+
+      drawTextBox("Gender doesn't affect anything in the game (for this version)", 60, 1, 40, 15, color.white, color.blue, "left")
+
+      drawBox("", 65, 19, 30, 3, color.white, color.blue, "thick", "")
+      drawTextColor(" ^w[^yM^w]ale or [^yF^w]emale ", 70, 20, 20 , color.blue)
+    end
 
   drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 26, 30, color.black)
 

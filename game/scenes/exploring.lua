@@ -3,6 +3,8 @@
 
 function exploringLoad()
 	-- all the one-time things that need to load for title scene
+  game.bgm.exploring = love.audio.newSource("bgm/Exploring-DanaRoskvist.ogg", "stream")
+  game.bgm.exploring:setLooping(true)
 end -- titleLoad()
 
 
@@ -57,6 +59,13 @@ end -- titleInput
 
 function exploringRun()
 	-- anything to run on scene load
+  if game.bgm.exploring:isPlaying() then
+    -- do stuff
+  else
+    love.audio.stop( )
+    game.bgm.exploring:play()
+  end
+
 end -- titleRun
 
 function exploringUpdate()
@@ -71,7 +80,7 @@ function exploringDraw()
 	love.graphics.setColor( color.darkgrey )
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
-	local text = "\nTITLE SCENE\n\nThis is the title scene. Imagine some fancy logo here.\n"
+	local text = "EXPLORING SCENE\n\nThis is the title scene. Imagine some fancy logo here.\n"
 	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
 
 
