@@ -1,5 +1,16 @@
 -- all the different inputs for each scene, in functions
 
+local areaData = {
+  id = "Mud School", -- name of area, eg Mud School
+  desc = "Recommended for new players to explore slowly and get a Mud School Diploma. The cage rooms are also great for quickly leveling to level 6. You may leave for Midgaard anytime, but will not be able to return.", -- general desc of area
+  rooms = 75, -- number of rooms
+  population = 34, -- number of mobs
+  levelLow = 1, -- lowest level mob
+  levelHigh = 6, -- highest level mob
+  levelMid = 1, -- median level of mobs
+  alignment = 50, -- average alignment of mobs in percentage (0 for evil, 50 for neutral, 100 for good)
+  terrain = "city", -- types (water, forest, rocks, jungle, city, mountains, plains, desert, swamp, hills)
+}
 
 function equipingLoad()
 	-- all the one-time things that need to load for title scene

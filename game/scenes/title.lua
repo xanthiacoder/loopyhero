@@ -72,6 +72,6 @@ function titleDraw()
     [3] = "^W[^yC^W]redits",
     [4] = "^W[^yQ^W]uit"
   }
-  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.1 ", 65, 22, 29, color.brightblue, color.blue)
+  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.2 ", 65, 22, 29, color.brightblue, color.blue)
 
 end -- titleDraw

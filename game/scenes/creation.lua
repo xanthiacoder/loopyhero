@@ -1,5 +1,176 @@
 -- all the different inputs for each scene, in functions
 
+  local charData = {
+    name = "", -- char name
+    race = "", -- Aarakocran, Beastkin, Centaur, Drow, Duergar, Dwarf, Elf, Githyanki, Gnoll, Gnome, Goblin, Half Elf, Halfling, Human, Lizard Man, Merfolk, Mindflayer, Ogre, Orc, Pixie, Svirfneblin, Tiefling
+    gender = "", -- male / female
+    str = 0, -- strength
+    maxstr = 0,
+    int = 0, -- intelligence
+    maxint = 0,
+    dex = 0, -- dexterity
+    maxdex = 0,
+    con = 0, -- constitution
+    maxcon = 0,
+    cha = 0, -- charisma
+    maxcha = 0,
+    wis = 0, -- wisdom
+    maxwis = 0,
+    class = "", -- base class (Apprentice, Bard, Cleric, Druid, Fighter, Mage, or Thief)
+    atk = 0, -- attack points
+    dmg = 0, -- damage points
+    pracs = 0, -- practice points
+    trains = 0, -- train points
+    hp = 0, -- health
+    hpmax = 0,
+    mn = 0, -- mana
+    mnmax = 0,
+    mv = 0, -- movement
+    mvmax = 0,
+    alignment = "",
+    inclination = "",
+    height = 0,
+    weight = 0,
+  }
+
+  local charAbilites = {
+
+  }
+
+  local charImmunities = {
+
+  }
+
+  local charEquipment = {
+
+  }
+
+  local races = {
+    [1] = "Aarakocran",
+    [2] = "Beastkin",
+    [3] = "Centaur",
+    [4] = "Drow",
+    [5] = "Duergar",
+    [6] = "Dwarf",
+    [7] = "Elf",
+    [8] = "Githyanki",
+    [9] = "Gnoll",
+    [10] = "Gnome",
+    [11] = "Goblin",
+    [12] = "Half Elf",
+    [13] = "Halfling",
+    [14] = "Human",
+    [15] = "Lizard Man",
+    [16] = "Merfolk",
+    [17] = "Mindflayer",
+    [18] = "Ogre",
+    [19] = "Orc",
+    [20] = "Pixie",
+    [21] = "Svirfneblin",
+    [22] = "Tiefling",
+  }
+
+  local raceDesc = {
+    [1] = "Aarakocran are bipedal birdmen, with hands incorporated into their wings. Aarakocran are a little taller than humans, but much lighter dueto their bone structure.  They are adept flyers with superior vision.",
+    [2] = "Though others dismiss the fuzzy, animal-like Beastkin as a single aberration, there are many distinct kinds, each resembling a different woodland beast: wolves, foxes, and rabbits are only some of them.  Beastkin may be noble or savage, but usually take to natural magics well while spurning orthodox religion.",
+    [3] = "Centaurs are large creatures with the body of a horse and the upper torso, head, and arms of a human. Their class choices are limited, but they excel at forestry, and make excellent rangers and druids.",
+    [4] = "These dark skinned cousins of the elves hate the sunlight, and are quick, but frail.  Due to their weakness to sunlight, Drow adventurers prefer to remain underground, although those who venture to the surface use their darkness globes to dampen the light.  This race is more challenging to play.",
+    [5] = "A grumpier balder dwarf, these creatures have numerous dark underground abilities.  Duergar are slow to level and starts in a more difficult start area, Magthere Wa'q.",
+    [6] = "Dwarves are shorter than humans, but much stockier, and enjoy sporting beards (including the women).",
+    [7] = "Elves are slightly shorter and more slender than humans, but are quick and agile.",
+    [8] = "Githyanki are planar travelers from an ancient race whom have taken residence in the Astral Plane.  They are tall and gaunt, but also quite powerful.  They use their knowledge of the planes to take brief jaunts around obstacles, appearing to teleport into well protected areas. This race starts in a more difficult start area, Magthere Wa'q.",
+    [9] = "Gnolls are viscous anthropomorphic hyena-men.  They stand 6 feet to 7 and a half feet tall, are lean and very viscous.  Gnolls enjoy displays of cruelty and mercilessness, often pulling limbs from their living prey. They hunt creatures of all sorts, but particularly enjoy hunting intelligent species.",
+    [10] = "Gnomes are curious and quick-witted folk, resembling small dwarves.",
+    [11] = "Goblins are small twisted creatures, quick on their feet, and natural tinkerers with all manner of wicked traps and devices  Their class choices are limited, but they excel at thieving, and make great miners and delvers.  Due to their short life expectancy, Goblin adventurers receive a bonus to experience.",
+    [12] = "Half Elves are a mixture of humans and elves, possessing human drive and elven grace.",
+    [13] = "Halflings are a very short fur-footed folk, noted for their quick hands and round, full stomachs.",
+    [14] = "Just like you and me!  Humans are versatile and successful adventurers!",
+    [15] = "These large, bidedal humanoids stand about a head taller than humans. They have a thick three to six foot tail which they use for improved swimming and to protect themselves.  Lizard men prefer temperate to tropical environments and can hold their breath underwater for extended periods.",
+    [16] = "Merfolk are half-fish, half-humanoid dwellers of the sea.  They can breathe air and water, enabling trade with surface dwellers.  Merfolk are the dominant underwater race.",
+    [17] = "Mindflayers, or Illithid, are alien humanoids with a smooth, leathery face with four tentacles surrounding and protecting their mouths. They are taller than humans, but lighter and more frail due to millennia of reliance upon mind-controlled slave labor to do their manual work.  Mindflayers require a very special diet of brains that they mindsuck from charmed victims. This race starts in a more difficult start area, Magthere Wa'q.",
+    [18] = "Ogres are the less enlightened kin to the giants, possessing great strength and ferociousness at the expense of their intellect and dexterity .  As they are naturals at ripping things apart, they make excellent butchers.  Their class choices are limited, but any kind of Fighter or Barbarian would suit an ogre very well.",
+    [19] = "Orcs are powerful, brutish porcine humanoids that take great joy in the agony of others.  Their society is dictated by the strongest, most-vicious alphas of the tribe, who often band together to create great war-parties to destroy other species? civilization.",
+    [20] = "Pixies are playful fairy-kin, standing roughly two feet tall. These pranksters rarely venture into society, but sometimes enjoy pranking villagers near their woodland habitats.  Pixies have transparent butterfly wings and the innate ability to remain invisible as long as they wish.  Pixies are vegetarians and eating meat can make them violently ill.",
+    [21] = "Svirfneblin, or Deep Gnomes, are earthy-toned gnomes that live deep below the surface.  They prefer to isolate themselves from other underground societies, which are often cruel and conniving by deep gnome standards.",
+    [22] = "Tieflings are mortal beings who have a trace of demon heritage, granting them distinguished features including hornes, wings and a tail. Tiefling are universally distrusted due to their ancestry and tendency to fall upon the wicked ways of demons.",
+  }
+
+
+--[[Your stats below reflect your physical and mental gifts.  They can be
+boosted through the use of Training sessions, which are granted at first level,
+and
+are gained at a rate of one per level.  These training sessions are also
+needed to gain new spells and abilities which your class qualifies for, but does
+not get at first level.
+
+Strength: Physical strength and fighting prowess is reflected in strength.
+Fighter-types love their muscles.
+Intelligence: Memory and concentration, and the ability to gain greater
+proficiency in skills is reflected in Intelligence. Mages require intellect.
+Dexterity: Agility and the ability to dodge blows is reflected in Dexterity.
+Thieves need all of this they can get.
+Constitution: Health, stamina, and the ability to live through harder fights
+is reflected in Constitution. Druids adore health.
+Charisma: Grace, charm, and the ability to get better prices from merchants
+is reflected in Charisma. Bards live off their charm.
+Wisdom: Intuition, wit, and the ability to gain more practice points per
+level is reflected in Wisdom. Clerics use wisdom best.
+
+You are awarded 2 BONUSCHARSTATS!
+
+You are awarded 2 BONUSCHARSTATS!
+
+Your current stats are:
+Strength       : 3 /18
+Intelligence   : 3 /18
+Dexterity      : 3 /18
+Constitution   : 3 /18
+Charisma       : 3 /18
+Wisdom         : 3 /18
+STATS TOTAL    : 18/108
+
+You have 56 points remaining.
+Enter a Stat to add or remove points, ? for help, or R for random roll.]]
+
+--[[This would qualify you for Apprentice, Bard, Cleric, Druid, Fighter, Mage,
+and Thief.
+
+Now it is time to choose your character's Class, which is the career-path
+that they will follow in the game.  This is your most important decision,
+choose wisely!
+
+Fighter   : Fighters are brutish weapon masters, skilled in the art of
+killing, and invaluable in a close melee.  This also include Rangers, Paladins,
+Barbarians, and Monks.
+
+Thief     : Thieves are skillful, sly, and devious, skilled at swiping,
+stealing, hiding, sneaking, trapping, poisoning, and more.  This also includes
+Assassins, Arcanists, Burglars, and Trappers.
+
+Bard      : Bards are traveling singers, whose "songs" can possess
+powerful magic, who also qualify for many thief skills.
+
+Cleric    : Clerics are the great vassals of the Gods, who possess great
+magical abilities in their numerous "prayers".  This also includes
+numerous specialist devotional Cleric classes.
+
+Mage      : Mages are masters of magic, and wielders of the great elemental
+powers.  This also includes numerous Specialist Mage classes.
+
+Druid     : Druids are mystical guardians of the natural world, whose magic
+is drawn from earth, sea, and sky.
+
+Apprentice: Not sure what to be?  Start off as an Apprentice, and take
+training in one of the better classes when you are ready!
+
+Please choose from the following Classes:
+[Apprentice, Bard, Cleric, Druid, Fighter, Mage, or Thief]]
+
+local nameEntry = false -- state for data entry
+local dataString = "" -- input string from user
+
+local raceEntry = false -- state for race entry
+local raceSelected = 1
 
 function creationLoad()
 	-- all the one-time things that need to load for title scene
@@ -9,10 +180,6 @@ end -- titleLoad()
 function creationInput()
 	-- this scene's input mapping
 	function love.keypressed(key, scancode, isrepeat)
-		if key == "return" then
-			fullscreen = not fullscreen
-			love.window.setFullscreen(fullscreen, "exclusive")
-		end
 
         -- for switching scenes
 		if key == "escape" then
@@ -22,13 +189,46 @@ function creationInput()
 			titleRun()
 		end
 
+    -- 2nd : race entry
+    if nameEntry and charData.race == "" and raceEntry == false then
+      if key == "up" and raceSelected > 1 then
+        raceSelected = raceSelected - 1
+      end
+      if key == "down" and raceSelected < #races and raceEntry == false then
+        raceSelected = raceSelected + 1
+      end
+      if key == "return" then
+        raceEntry = true
+        charData.race = races[raceSelected]
+      end
+    end
 
+    -- 1st capture keys for name entry
+    if nameEntry == false then
+      if key == "return" and #dataString > 0 then
+        nameEntry = true
+        charData.name = dataString -- confirm charData.name
+        key = nil
+      else
+        if key == "backspace" then
+          dataString = dataString:sub(1, -2)
+        elseif string.byte(key) >= 97 and string.byte(key) <= 122 and #key == 1 and #dataString < 26 then -- single alphabet detected
+          dataString = dataString .. key -- add alphabet to dataString
+        end
+      end
+    end
 
 	end
 end -- titleInput
 
 function creationRun()
 	-- anything to run on scene load
+  if game.bgm.title:isPlaying() then
+    -- do stuff
+  else
+    love.audio.stop( )
+    game.bgm.title:play()
+  end
 end -- titleRun
 
 function creationUpdate()
@@ -43,8 +243,45 @@ function creationDraw()
 	love.graphics.setColor( color.darkgrey )
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
-	local text = "\nCREATION SCENE\n\nCreate your character here\n"
-	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
+  drawTextColor("^wName  : ^y"..charData.name, 1, 1, 40, color.black)
+  drawTextColor("^wRace  : ^y"..charData.race, 1, 2, 40, color.black)
+  drawTextColor("^wGender: ^y"..charData.gender, 1, 3, 40, color.black)
+  drawTextColor("^wHeight: ^y"..charData.height, 1, 4, 40, color.black)
+  drawTextColor("^wWeight: ^y"..charData.weight, 1, 5, 40, color.black)
+
+  drawTextColor("^wStrength     : ^y"..charData.str.."/"..charData.maxstr, 1, 7,  40, color.black)
+  drawTextColor("^wIntelligence : ^y"..charData.int.."/"..charData.maxint, 1, 8,  40, color.black)
+  drawTextColor("^wDexterity    : ^y"..charData.dex.."/"..charData.maxdex, 1, 9,  40, color.black)
+  drawTextColor("^wConstitution : ^y"..charData.con.."/"..charData.maxcon, 1, 10,  40, color.black)
+  drawTextColor("^wCharisma     : ^y"..charData.cha.."/"..charData.maxcha, 1, 11,  40, color.black)
+  drawTextColor("^wWisdom       : ^y"..charData.wis.."/"..charData.maxwis, 1, 12, 40, color.black)
+
+  drawTextColor("^wClass       : ^y"..charData.class, 1, 14, 40, color.black)
+  drawTextColor("^wAlignment   : ^y"..charData.alignment, 1, 15, 40, color.black)
+  drawTextColor("^wInclination : ^y"..charData.inclination, 1, 16, 40, color.black)
+
+  drawTextColor("^wHealth   : ^y"..charData.hp.."/"..charData.hpmax, 1, 18, 40, color.black)
+  drawTextColor("^wMana     : ^y"..charData.mn.."/"..charData.mnmax, 1, 19, 40, color.black)
+  drawTextColor("^wMovement : ^y"..charData.mv.."/"..charData.mvmax, 1, 20, 40, color.black)
+
+  drawTextColor("^wAttack : ^y"..charData.atk, 1, 22, 40, color.black)
+  drawTextColor("^wDamage : ^y"..charData.dmg, 1, 23, 40, color.black)
+
+  drawTextColor("^wPractices : ^y"..charData.pracs, 1, 25, 40, color.black)
+  drawTextColor("^wTrains    : ^y"..charData.trains, 1, 26, 40, color.black)
+
+  -- 1st : enter character name
+  if charData.name == "" then -- draw dialogbox for dataentry for charData.name
+    drawBox("", 65, 19, 30, 3, color.white, color.blue, "thick", "")
+    drawTextColor("^w| ^yEnter name ^w|", 67, 19, 14, color.blue)
+    drawTextColor("^w"..dataString, 67, 20, 26, color.blue)
+  end
+
+  -- 2nd : choose race
+  if charData.name ~= "" and charData.race == "" then
+    drawScrollList("", races, "^w[^yUP/DOWN^w] Select Race ", raceSelected, 60, 19, 40, color.brightblue, color.blue)
+    drawTextBox(raceDesc[raceSelected], 60, 1, 40, 15, color.white, color.blue, "left")
+  end
 
   drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 26, 30, color.black)
 

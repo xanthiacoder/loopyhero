@@ -825,7 +825,7 @@ function drawScrollList(title, list, options, selected, x, y, width, framecolor,
 		drawInputTip(statusBar, x, y+height-1, framecolor, bgcolor)
 	else
 		drawFatBox(title, x, y, width, height, framecolor, bgcolor)
-		drawInputTip(statusBar, x+math.floor((width-optionsLen)/2)-1, y+height-1, framecolor, bgcolor)
+		drawInputTip(statusBar, x+2, y+height-1, framecolor, bgcolor)
 	end
 
 	-- draw only selected item in list
