@@ -225,6 +225,67 @@ function creationInput()
 			titleRun()
 		end
 
+    -- 4th : stats entry
+    if nameEntry and raceEntry and genderEntry and statsEntry == false then
+      if key == "return" and statPoints == 0 then -- only confirm when all points are used
+        statsEntry = true
+      end
+      -- Q/W for str
+      -- A/S for int
+      -- Z/X for dex
+      -- E/R for con
+      -- D/F for cha
+      -- C/V for wis
+      if key == "q" and charData.str > 3 then
+        charData.str = charData.str - 1
+        statPoints = statPoints + 1
+      end
+      if key == "a" and charData.int > 3 then
+        charData.int = charData.int - 1
+        statPoints = statPoints + 1
+      end
+      if key == "z" and charData.dex > 3 then
+        charData.dex = charData.dex - 1
+        statPoints = statPoints + 1
+      end
+      if key == "e" and charData.con > 3 then
+        charData.con = charData.con - 1
+        statPoints = statPoints + 1
+      end
+      if key == "d" and charData.cha > 3 then
+        charData.cha = charData.cha - 1
+        statPoints = statPoints + 1
+      end
+      if key == "c" and charData.wis > 3 then
+        charData.wis = charData.wis - 1
+        statPoints = statPoints + 1
+      end
+      if key == "w" and charData.str < charData.maxstr and statPoints > 0 then
+        charData.str = charData.str + 1
+        statPoints = statPoints - 1
+      end
+      if key == "s" and charData.int < charData.maxint and statPoints > 0 then
+        charData.int = charData.int + 1
+        statPoints = statPoints - 1
+      end
+      if key == "x" and charData.dex < charData.maxdex and statPoints > 0 then
+        charData.dex = charData.dex + 1
+        statPoints = statPoints - 1
+      end
+      if key == "r" and charData.con < charData.maxcon and statPoints > 0 then
+        charData.con = charData.con + 1
+        statPoints = statPoints - 1
+      end
+      if key == "f" and charData.cha < charData.maxcha and statPoints > 0 then
+        charData.cha = charData.cha + 1
+        statPoints = statPoints - 1
+      end
+      if key == "v" and charData.wis < charData.maxwis and statPoints > 0 then
+        charData.wis = charData.wis + 1
+        statPoints = statPoints - 1
+      end
+    end
+
     -- 3rd : gender entry
     if nameEntry and raceEntry and genderEntry == false then
       if key == "m" then
@@ -368,7 +429,23 @@ function creationDraw()
       drawTextColor(" ^w[^yM^w]ale or [^yF^w]emale ", 70, 20, 20 , color.blue)
     end
 
-  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 26, 30, color.black)
+
+    -- 4th : stats entry
+    if nameEntry and raceEntry and genderEntry and statsEntry == false then
+
+      local text = "\n Distribute pts\n\n Dec   Stat  Inc\n [Q]   Str   [W]\n [A]   Int   [S]\n [Z]   Dex   [X]\n [E]   Con   [R]\n [D]   Cha   [F]\n [C]   Wis   [V]\n\n Stat points left = "..statPoints.."\n\n All points must be used\n\n [RETURN] Finish distribution"
+      drawTextBox(text, 60, 1, 40, 17, color.white, color.blue, "left")
+
+      text = "\n To be eligible for a class, a minimum amount in a prime stat is required\n\n Class     Minimum Stat Required\n\n Bard      Charisma 9+\n Cleric    Wisdom 9+\n Commoner  Wisdom 5+, Intelligence 5+\n Druid     Constitution 9+\n Fighter   Strength 9+\n Mage      Intelligence 9+\n Thief     Dexterity 9+\n\n"
+      drawTextBox(text, 110, 1, 45, 17, color.brightyellow, color.blue, "left")
+
+      text = " Str : affects carry capacity, modifies melee damage, movement recovery outside combat, determines attack score\n Int : affects mana gained per level, mana regeneration outside combat, spells critical chance and damage, skill proficiency rates\n Dex : determines armor score, melee / ranged critical hit chance and damage, resists and recovers from some skill attacks\n Con : affects health and movement gained per level, health recovery outside of combat, disease and poison resistance\n Cha : determines max number of followers you can have grouped, affects buy and sell prices\n Wis : affects bonus practice points per level, mana regeneration outside of combat"
+      drawTextBox(text, 0, 29, 160, 6, color.white, color.green, "left")
+
+    end
+
+
+  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 36, 30, color.black)
 
 
 end -- titleDraw

@@ -13,9 +13,9 @@
 
 -- monotype font is JetBrainsMonoNL-Regular.ttf
 -- font size is 14pt
--- font width is 8 pixels, font height is 18 pixels
+-- font width is 8 pixels, font height is 19 pixels
 -- screen 1280 x 720 pixels
--- 160 x 40 chars
+-- 160 x 38 chars
 
 
 TEXT_WIDTH = "0---------1---------2---------3---------4---------5---------6---------7---------8---------9---------0---------1---------2---------3---------4---------5---------"
@@ -29,7 +29,7 @@ TEXT_BOXES = "╦ ╗ ╔ ═ ╩ ╝ ╚ ║ ╬ ╣ ╠ ╥ ╖ ╓ ┰ ┒ �
 FONT = "JetBrainsMonoNL-Regular.ttf"
 FONT_SIZE = 14
 FONT_WIDTH = 8
-FONT_HEIGHT = 18
+FONT_HEIGHT = 19
 
 --[[	eg. 	love.graphics.setColor( color.white ) or color[0..15]
 color = {
