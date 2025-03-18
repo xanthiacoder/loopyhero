@@ -1,40 +1,5 @@
 -- all the different inputs for each scene, in functions
 
-  local charData = {
-    name = "", -- char name
-    race = "", -- Aarakocran, Beastkin, Centaur, Drow, Duergar, Dwarf, Elf, Githyanki, Gnoll, Gnome, Goblin, Half Elf, Halfling, Human, Lizard Man, Merfolk, Mindflayer, Ogre, Orc, Pixie, Svirfneblin, Tiefling
-    gender = "", -- male / female
-    str = 3, -- strength
-    maxstr = 18,
-    int = 3, -- intelligence
-    maxint = 18,
-    dex = 3, -- dexterity
-    maxdex = 18,
-    con = 3, -- constitution
-    maxcon = 18,
-    cha = 3, -- charisma
-    maxcha = 18,
-    wis = 3, -- wisdom
-    maxwis = 18,
-    class = "", -- base class (Apprentice, Bard, Cleric, Druid, Fighter, Mage, or Thief)
-    atk = 0, -- attack points
-    dmg = 0, -- damage points
-    pracs = 0, -- practice points
-    trains = 0, -- train points
-    hp = 0, -- health
-    hpmax = 0,
-    mn = 0, -- mana
-    mnmax = 0,
-    mv = 0, -- movement
-    mvmax = 0,
-    alignment = 0,
-    inclination = 0,
-    height = 0,
-    weight = 0,
-    xp = 0, -- experience points
-    xpgain = 100, -- earned experience rate in percentage
-  }
-
   local charAbilites = {
 
   }
@@ -122,6 +87,32 @@ local racesBonus = {
   [20] = { -6,      1,   0,      0,   7,      7,  -7,     -7,   2,      2,   0,      0,      0 },
   [21] = {  2,      2,   1,      1,   0,      0,  -2,      1,   0,      0,  -1,      1,      0 },
   [22] = {  0,      0,   1,      1,   0,      0,   0,      0,   2,      2,   0,      0,    -20 },
+}
+
+local racesHW = {
+-- height weight | Hlow, Hhigh,  Wlow, Whigh
+  [1]  =         {   59,    71,   160,  240 },
+  [2]  =         {   66,    78,   150,  200 },
+  [3]  =         {   60,    72,  1150, 1550 },
+  [4]  =         {   59,    71,    80,  160 },
+  [5]  =         {   50,    58,   150,  250 },
+  [6]  =         {   50,    58,   150,  250 },
+  [7]  =         {   59,    71,    80,  160 },
+  [8]  =         {   61,    73,    90,  180 },
+  [9]  =         {   71,    79,   180,  260 },
+  [10] =         {   38,    44,    60,  110 },
+  [11] =         {   42,    48,    70,  120 },
+  [12] =         {   61,    73,    90,  180 },
+  [13] =         {   38,    44,    80,  130 },
+  [14] =         {   66,    78,   150,  200 },
+  [15] =         {   69,    72,   200,  250 },
+  [16] =         {   90,   102,   180,  230 },
+  [17] =         {   61,    73,    90,  180 },
+  [18] =         {   71,    83,   290,  380 },
+  [19] =         {   58,    70,   150,  250 },
+  [20] =         {   23,    27,    30,   35 },
+  [21] =         {   38,    44,    60,  110 },
+  [22] =         {   65,    73,   150,  230 },
 }
 
 --[[Your stats below reflect your physical and mental gifts.  They can be
@@ -324,32 +315,84 @@ function creationInput()
       if key == "return" then
         if classSelected == 1 and charData.cha > 8 then -- clear bard's minimum requirements
           charData.class = classList[classSelected]
+          charData.pracs = 5 + (math.ceil(charData.wis/6) + 1)
+          charData.trains = 3 + 1
+          charData.hpmax = 20 + ( math.ceil(charData.con/3) + (love.math.random(2,12)) )
+          charData.mnmax = 100 + ( math.ceil(charData.int/6) + (love.math.random(1,2)) )
+          charData.mvmax = 100 + ( 5 * math.ceil(charData.str/18) )
+          charData.atk = math.ceil(charData.cha/18)
+          charData.dmg = 1
           classEntry = true
         end
         if classSelected == 2 and charData.wis > 8 then -- clear cleric's minimum requirements
           charData.class = classList[classSelected]
+          charData.pracs = 5 + (math.ceil(charData.wis/6) + 2)
+          charData.trains = 3 + 1
+          charData.hpmax = 20 + ( math.ceil(charData.con/3) + (love.math.random(1,10)) )
+          charData.mnmax = 100 + ( math.ceil(charData.int/4) + (love.math.random(1,4)) )
+          charData.mvmax = 100 + ( 5 * math.ceil(charData.str/18) )
+          charData.atk = math.ceil(charData.wis/18)
+          charData.dmg = 1
           classEntry = true
         end
         if classSelected == 3 and charData.wis > 4 and charData.int > 4 then -- clear commoner's minimum requirements
           charData.class = classList[classSelected]
+          charData.pracs = 5 + (math.ceil(charData.wis/6) + 5)
+          charData.trains = 6 + 1
+          charData.hpmax = 20 + ( math.ceil(charData.con/9) + (love.math.random(1,4)) )
+          charData.mnmax = 100 + ( math.ceil(charData.int/10) + (love.math.random(1,2)) )
+          charData.mvmax = 100 + ( 5 * math.ceil(charData.str/18) )
+          charData.atk = math.ceil(charData.wis/18) - 1
+          charData.dmg = 1
           classEntry = true
         end
         if classSelected == 4 and charData.con > 8 then -- clear druid's minimum requirements
           charData.class = classList[classSelected]
+          charData.pracs = 5 + (math.ceil(charData.wis/6) + 2)
+          charData.trains = 3 + 1
+          charData.hpmax = 20 + ( math.ceil(charData.con/2) + (love.math.random(2,14)) )
+          charData.mnmax = 100 + ( math.ceil(charData.int/4) + (love.math.random(1,4)) )
+          charData.mvmax = 100 + ( 5 * math.ceil(charData.str/18) )
+          charData.atk = math.ceil(charData.con/18)
+          charData.dmg = 1
           classEntry = true
         end
         if classSelected == 5 and charData.str > 8 then -- clear fighter's minimum requirements
           charData.class = classList[classSelected]
+          charData.pracs = 3 + (math.ceil(charData.wis/6) - 1)
+          charData.trains = 4 + 1
+          charData.hpmax = 20 + ( math.ceil(charData.con/2) + (love.math.random(2,14)) )
+          charData.mnmax = 100 + ( math.ceil(charData.int/8) + (love.math.random(1,2)) )
+          charData.mvmax = 100 + ( 7 * math.ceil(charData.str/18) )
+          charData.atk = math.ceil(charData.str/18)
+          charData.dmg = 1
           classEntry = true
         end
         if classSelected == 6 and charData.int > 8 then -- clear mage's minimum requirements
           charData.class = classList[classSelected]
+          charData.pracs = 6 + (math.ceil(charData.wis/6) + 4)
+          charData.trains = 3 + 1
+          charData.hpmax = 20 + ( math.ceil(charData.con/6) + (love.math.random(1,5)) )
+          charData.mnmax = 100 + ( math.ceil(charData.int/3) + (love.math.random(1,4)) )
+          charData.mvmax = 100 + ( 3 * math.ceil(charData.str/18) )
+          charData.atk = math.ceil(charData.int/18)
+          charData.dmg = 1
           classEntry = true
         end
         if classSelected == 7 and charData.dex > 8 then -- clear thief's minimum requirements
           charData.class = classList[classSelected]
+          charData.pracs = 5 + (math.ceil(charData.wis/6) + 1)
+          charData.trains = 3 + 1
+          charData.hpmax = 20 + ( math.ceil(charData.con/3) + (love.math.random(1,10)) )
+          charData.mnmax = 100 + ( math.ceil(charData.int/6) + (love.math.random(1,3)) )
+          charData.mvmax = 100 + ( 6 * math.ceil(charData.str/18) )
+          charData.atk = math.ceil(charData.dex/18)
+          charData.dmg = 1
           classEntry = true
         end
+        charData.hp = charData.hpmax
+        charData.mn = charData.mnmax
+        charData.mv = charData.mvmax
       end
     end
 
@@ -450,6 +493,8 @@ function creationInput()
         charData.wis = charData.wis + racesBonus[raceSelected][11]
         charData.maxwis = charData.maxwis + racesBonus[raceSelected][12]
         charData.xpgain = charData.xpgain + racesBonus[raceSelected][13]
+        charData.height = love.math.random( racesHW[raceSelected][1], racesHW[raceSelected][2] )
+        charData.weight = love.math.random( racesHW[raceSelected][3], racesHW[raceSelected][4] )
       end
     end
 

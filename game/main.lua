@@ -28,6 +28,82 @@ require "scenes.looping"
 
 -- define global variables used in all scenes
 
+
+local itemClass = {
+  name = "^Wnothing",
+  weight = 0,
+  str = 0,
+  int = 0,
+  dex = 0,
+  con = 0,
+  cha = 0,
+  wis = 0,
+  hp  = 0,
+  mn  = 0,
+  mv  = 0,
+  atk = 0,
+  dmg = 0,
+}
+
+charData = {
+  name = "", -- char name
+  race = "", -- Aarakocran, Beastkin, Centaur, Drow, Duergar, Dwarf, Elf, Githyanki, Gnoll, Gnome, Goblin, Half Elf, Halfling, Human, Lizard Man, Merfolk, Mindflayer, Ogre, Orc, Pixie, Svirfneblin, Tiefling
+  gender = "", -- male / female
+  str = 3, -- strength
+  maxstr = 18,
+  int = 3, -- intelligence
+  maxint = 18,
+  dex = 3, -- dexterity
+  maxdex = 18,
+  con = 3, -- constitution
+  maxcon = 18,
+  cha = 3, -- charisma
+  maxcha = 18,
+  wis = 3, -- wisdom
+  maxwis = 18,
+  class = "", -- base class (Apprentice, Bard, Cleric, Druid, Fighter, Mage, or Thief)
+  atk = 0, -- attack points
+  dmg = 0, -- damage points
+  pracs = 0, -- practice points
+  trains = 0, -- train points
+  hp = 0, -- health
+  hpmax = 0,
+  mn = 0, -- mana
+  mnmax = 0,
+  mv = 0, -- movement
+  mvmax = 0,
+  alignment = 0,
+  inclination = 0,
+  height = 0,
+  weight = 0,
+  xp = 0, -- experience points
+  xpgain = 100, -- earned experience rate in percentage
+  items = 0,
+  itemsmax = 0,
+  load = 0,
+  loadmax = 0,
+  wimpy = 0,
+  head = itemClass,
+  eyes = itemClass,
+  ears = itemClass,
+  mouth = itemClass,
+  neck = itemClass,
+  back = itemClass,
+  body = itemClass,
+  torso = itemClass,
+  arms = itemClass,
+  leftwrist = itemClass,
+  rightwrist = itemClass,
+  hands = itemClass,
+  leftfinger = itemClass,
+  rightfinger = itemClass,
+  waist = itemClass,
+  legs = itemClass,
+  feet = itemClass,
+  wield = itemClass,
+  held = itemClass,
+}
+
 game = {}
 game.power = {}
 game.tooltip = "love-ansi library, Xanthia Coder 2025 | 1280x720, 160x38 chars, font 14pt - "
