@@ -59,24 +59,24 @@ function restoreAnsiDefaults()
 
 	--	eg. 	love.graphics.setColor( color.white )
 	color = {
-		black 			= {   0,   0,   0, 1 },
-		red 			= { 0.5,   0,   0, 1 },
-		green 			= {   0, 0.5,   0, 1 },
-		yellow 			= { 0.5, 0.5,   0, 1 },
-		blue 			= {   0,   0, 0.5, 1 },
-		magenta			= { 0.5,   0, 0.5, 1 },
-		cyan 			= {   0, 0.5, 0.5, 1 },
-		gray	 		= { 0.7, 0.7, 0.7, 1 },
-		grey	 		= { 0.7, 0.7, 0.7, 1 },
-		darkgray		= { 0.5, 0.5, 0.5, 1 },
-		darkgrey		= { 0.5, 0.5, 0.5, 1 },
-		brightred		= {   1,   0,   0, 1 },
+		black 			  = {   0,   0,   0, 1 },
+		red 			    = { 0.5,   0,   0, 1 },
+		green 			  = {   0, 0.5,   0, 1 },
+		yellow 			  = { 0.5, 0.5,   0, 1 },
+		blue 			    = {   0,   0, 0.5, 1 },
+		magenta			  = { 0.5,   0, 0.5, 1 },
+		cyan 			    = {   0, 0.5, 0.5, 1 },
+		gray	 		    = { 0.7, 0.7, 0.7, 1 },
+		grey	 		    = { 0.7, 0.7, 0.7, 1 },
+		darkgray		  = { 0.5, 0.5, 0.5, 1 },
+		darkgrey		  = { 0.5, 0.5, 0.5, 1 },
+		brightred		  = {   1,   0,   0, 1 },
 		brightgreen		= {   0,   1,   0, 1 },
 		brightyellow 	= {   1,   1,   0, 1 },
 		brightblue 		= {   0,   0,   1, 1 },
-		brightmagenta 	= {   1,   0,   1, 1 },
+		brightmagenta = {   1,   0,   1, 1 },
 		brightcyan 		= {   0,   1,   1, 1 },
-		white 			= {   1,   1,   1, 1 },
+		white 			  = {   1,   1,   1, 1 },
 	}
 
 end
@@ -91,6 +91,7 @@ if love.filesystem.getInfo( "ui/color.txt" ) == nil then -- no color file
   print(json.encode(color))
   local colorSave = io.open(love.filesystem.getSaveDirectory().."//ui/color.txt", "w+")
 	colorSave:write(json.encode(color))
+  colorSave:close()
 
 else
 	-- read existing ansi files

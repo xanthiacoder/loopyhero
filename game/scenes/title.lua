@@ -30,6 +30,12 @@ function titleInput()
 			optionsInput()
 			optionsRun()
 		end
+		if key == "a" or key == "A" then
+			game.scene.now = "achievements"
+      game.scene.previous = "title"
+			creditsInput()
+			creditsRun()
+    end
 		if key == "c" or key == "C" then
 			game.scene.now = "credits"
       game.scene.previous = "title"
@@ -69,9 +75,10 @@ function titleDraw()
   local menuOptions = {
     [1] = "^W[^yS^W]tart game",
     [2] = "^W[^yO^W]ptions",
-    [3] = "^W[^yC^W]redits",
-    [4] = "^W[^yQ^W]uit"
+    [3] = "^W[^yA^W]chievements",
+    [4] = "^W[^yC^W]redits",
+    [5] = "^W[^yQ^W]uit",
   }
-  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.2 ", 65, 22, 29, color.brightblue, color.blue)
+  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.4 ", 100, 18, 31, color.brightblue, color.blue)
 
 end -- titleDraw

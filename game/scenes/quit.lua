@@ -50,5 +50,5 @@ function quitDraw()
   love.graphics.setColor( color.white ) -- reset color
   love.graphics.draw(game.bgart.title, 0, 0)
 
-  drawDialogBox("", "Do you really want to quit?", " [Y]es  [N]o ", 64, 22, color.brightblue, color.blue)
+  drawDialogBox("", "Do you really want to quit?", " [Y]es  [N]o ", 100, 18, color.brightblue, color.blue)
 end -- titleDraw

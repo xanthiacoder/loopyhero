@@ -27,8 +27,8 @@
     mnmax = 0,
     mv = 0, -- movement
     mvmax = 0,
-    alignment = "",
-    inclination = "",
+    alignment = 0,
+    inclination = 0,
     height = 0,
     weight = 0,
     xp = 0, -- experience points
@@ -205,10 +205,53 @@ local genderEntry = false
 local statsEntry = false
 local statPoints = 56 -- points to be distributed among the stats
 
+local classEntry = false
+local classSelected = 1
+local classList = {
+  [1] = "Bard",
+  [2] = "Cleric",
+  [3] = "Commoner",
+  [4] = "Druid",
+  [5] = "Fighter",
+  [6] = "Mage",
+  [7] = "Thief"
+}
+local classDesc = {
+  [1] = "Bards are traveling singers, whose songs can possess powerful magic, who also qualify for many thief skills.",
+  [2] = "Clerics are the great vassals of the Gods, who possess great magical abilities in their numerous prayers.",
+  [3] = "Commoners might not appear like heroes, but they delve deep into crafting items and equipment.",
+  [4] = "Druids are mystical guardians of the natural world, whose magic is drawn from earth, sea, and sky.",
+  [5] = "Fighters are brutish weapon masters, skilled in the art of killing, and invaluable in a close melee.",
+  [6] = "Mages are masters of magic, and wielders of the great elemental powers.",
+  [7] = "Thieves are skillful, sly, and devious, skilled at swiping, stealing, hiding, sneaking, trapping, poisoning, and more.",
+}
+
+local alignmentEntry = false
+alignmentSelected = 1
+
+local alignmentList = {
+  [1] = "Evil",
+  [2] = "Neutral",
+  [3] = "Good",
+}
+
+--[[Your social order inclination is rated from Lawful to Chaotic, with Lawful
+representing cultural acceptance and social order, Chaotic representing
+heightened importance on free will and rule fluidity, and Moderate representing
+the balance between Lawful and Chaotic.]]
+
+local inclinationEntry = false
+inclinationSelected = 1
+
+local inclinationList = {
+  [1] = "Chaotic",
+  [2] = "Moderate",
+  [3] = "Lawful",
+}
 
 function creationLoad()
 	-- all the one-time things that need to load for title scene
-  game.bgm.creation = love.audio.newSource("bgm/Creation-Baroo.ogg", "stream")
+  game.bgm.creation = love.audio.newSource("bgm/Creation-DanaRoskvist.ogg", "stream")
   game.bgm.creation:setLooping(true)
 end -- titleLoad()
 
@@ -217,13 +260,98 @@ function creationInput()
 	-- this scene's input mapping
 	function love.keypressed(key, scancode, isrepeat)
 
-        -- for switching scenes
+    -- for switching scenes
 		if key == "escape" then
 			game.scene.now = "title"
 			game.scene.previous = "creation"
       titleInput()
 			titleRun()
 		end
+
+    -- 7th : inclination entry
+
+    if nameEntry and raceEntry and genderEntry and statsEntry and classEntry and alignmentEntry and inclinationEntry == false then
+      if key == "up" and inclinationSelected > 1 then
+        inclinationSelected = inclinationSelected - 1
+      end
+      if key == "down" and inclinationSelected < #inclinationList and inclinationEntry == false then
+        inclinationSelected = inclinationSelected + 1
+      end
+      if key == "return" then
+        if inclinationSelected == 1 then
+          charData.inclination = 0
+        end
+        if inclinationSelected == 2 then
+          charData.inclination = 50
+        end
+        if inclinationSelected == 3 then
+          charData.inclination = 100
+        end
+        inclinationEntry = true
+      end
+    end
+
+    -- 6th : alignment entry
+    if nameEntry and raceEntry and genderEntry and statsEntry and classEntry and alignmentEntry == false then
+      if key == "up" and alignmentSelected > 1 then
+        alignmentSelected = alignmentSelected - 1
+      end
+      if key == "down" and alignmentSelected < #alignmentList and alignmentEntry == false then
+        alignmentSelected = alignmentSelected + 1
+      end
+      if key == "return" then
+        if alignmentSelected == 1 then
+          charData.alignment = 0
+        end
+        if alignmentSelected == 2 then
+          charData.alignment = 50
+        end
+        if alignmentSelected == 3 then
+          charData.alignment = 100
+        end
+        alignmentEntry = true
+      end
+    end
+
+    -- 5th : class entry
+    if nameEntry and raceEntry and genderEntry and statsEntry and classEntry == false then
+      if key == "up" and classSelected > 1 then
+        classSelected = classSelected - 1
+      end
+      if key == "down" and classSelected < #classList and classEntry == false then
+        classSelected = classSelected + 1
+      end
+      if key == "return" then
+        if classSelected == 1 and charData.cha > 8 then -- clear bard's minimum requirements
+          charData.class = classList[classSelected]
+          classEntry = true
+        end
+        if classSelected == 2 and charData.wis > 8 then -- clear cleric's minimum requirements
+          charData.class = classList[classSelected]
+          classEntry = true
+        end
+        if classSelected == 3 and charData.wis > 4 and charData.int > 4 then -- clear commoner's minimum requirements
+          charData.class = classList[classSelected]
+          classEntry = true
+        end
+        if classSelected == 4 and charData.con > 8 then -- clear druid's minimum requirements
+          charData.class = classList[classSelected]
+          classEntry = true
+        end
+        if classSelected == 5 and charData.str > 8 then -- clear fighter's minimum requirements
+          charData.class = classList[classSelected]
+          classEntry = true
+        end
+        if classSelected == 6 and charData.int > 8 then -- clear mage's minimum requirements
+          charData.class = classList[classSelected]
+          classEntry = true
+        end
+        if classSelected == 7 and charData.dex > 8 then -- clear thief's minimum requirements
+          charData.class = classList[classSelected]
+          classEntry = true
+        end
+      end
+    end
 
     -- 4th : stats entry
     if nameEntry and raceEntry and genderEntry and statsEntry == false then
@@ -443,6 +571,25 @@ function creationDraw()
       drawTextBox(text, 0, 29, 160, 6, color.white, color.green, "left")
 
     end
+
+    -- 5th : class entry
+    if nameEntry and raceEntry and genderEntry and statsEntry and classEntry == false then
+      drawScrollList("", classList, "^w[^yUP/DOWN^w] Select Class ", classSelected, 60, 19, 40, color.brightblue, color.blue)
+      drawTextBox(classDesc[classSelected], 60, 1, 40, 15, color.white, color.blue, "left")
+    end
+
+    -- 6th : alignment entry
+    if nameEntry and raceEntry and genderEntry and statsEntry and classEntry and alignmentEntry == false then
+      drawScrollList("", alignmentList, "^w[^yUP/DOWN^w] Select alignment ", alignmentSelected, 60, 19, 40, color.brightblue, color.blue)
+      drawTextBox("Alignment affects the amount of XP you get from combat. An evil character killing an evil monster earns less than a good character killing the same.\n\nDruids need to remain neutral so that their chants do not fail, and clerical prayers tend to fail when alignments do not match.\n\n(in percentage : 0 = evil, 50 = neutral, 100 = good)", 60, 1, 40, 15, color.white, color.blue, "left")
+    end
+
+    -- 7th : alignment entry
+    if nameEntry and raceEntry and genderEntry and statsEntry and classEntry and alignmentEntry and inclinationEntry == false then
+      drawScrollList("", inclinationList, "^w[^yUP/DOWN^w] Select inclination ", inclinationSelected, 60, 19, 40, color.brightblue, color.blue)
+      drawTextBox("Your social order inclination is rated from Lawful to Chaotic, with Lawful representing cultural acceptance and social order, Chaotic representing heightened importance on free will and rule fluidity, and Moderate representing the balance between Lawful and Chaotic.\n\n(Currently does not impact much in this game version)", 60, 1, 40, 15, color.white, color.blue, "left")
+    end
+
 
 
   drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 36, 30, color.black)

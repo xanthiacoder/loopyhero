@@ -14,6 +14,7 @@ json = require "lib.json"	-- encode / decode table to JSON
 -- require all the scene files here
 require "scenes.title"
 require "scenes.options"
+require "scenes.achievements"
 require "scenes.credits"
 require "scenes.quit"
 require "scenes.start"
@@ -29,7 +30,7 @@ require "scenes.looping"
 
 game = {}
 game.power = {}
-game.tooltip = "love-ansi library, Xanthia Coder 2025 | 1280x720, 160x40 chars, font 14pt - "
+game.tooltip = "love-ansi library, Xanthia Coder 2025 | 1280x720, 160x38 chars, font 14pt - "
 
 game.bgm = {}
 game.bgart = {}
@@ -51,8 +52,6 @@ if love.filesystem.getUserDirectory( ) == "/home/ark/" then
 	os.execute("mkdir " .. love.filesystem.getSaveDirectory() .. "//ui/default")
 	os.execute("mkdir " .. love.filesystem.getSaveDirectory() .. "//autosaves")
   os.execute("mkdir " .. love.filesystem.getSaveDirectory() .. "//char")
-
-
 else
 	game.system = "Others"
 	love.filesystem.createDirectory("ui")
@@ -129,6 +128,7 @@ function love.load()
 	-- load all scenes
 	titleLoad()
   optionsLoad()
+  achievementsLoad()
   creditsLoad()
   quitLoad()
   startLoad()
@@ -162,6 +162,8 @@ function love.update(dt)
 		titleUpdate()
 	elseif game.scene.now == "options" then
 		optionsUpdate()
+	elseif game.scene.now == "achievements" then
+		achievementsUpdate()
 	elseif game.scene.now == "credits" then
 		creditsUpdate()
 	elseif game.scene.now == "quit" then
@@ -193,6 +195,8 @@ function love.draw()
 		titleDraw()
 	elseif game.scene.now == "options" then
 		optionsDraw()
+	elseif game.scene.now == "achievements" then
+		achievementsDraw()
 	elseif game.scene.now == "credits" then
 		creditsDraw()
 	elseif game.scene.now == "quit" then

@@ -3,6 +3,9 @@
 
 function titleLoad()
 	-- all the one-time things that need to load for title scene
+  game.bgm.title = love.audio.newSource("bgm/Title.ogg", "static")
+  game.bgm.title:setLooping(true)
+  game.bgart.title = love.graphics.newImage("bgart/title.jpg")
 end -- titleLoad()
 
 
@@ -14,40 +17,28 @@ function titleInput()
 			love.window.setFullscreen(fullscreen, "exclusive")
 		end
 
-		if key == "escape" then
-			love.event.quit()
-		end
-
-		-- for testing HP bars
-		if key == "a" then
-			local hit = love.math.random(2)
-			if hit == 1 then
-				punch[love.math.random(7)]:play()
-				game.playerone.hpNow = game.playerone.hpNow - love.math.random(10)
-			else
-				punch[love.math.random(7)]:play()
-				game.playertwo.hpNow = game.playertwo.hpNow - love.math.random(10)
-			end
-		end
-
 		-- for switching scenes
-		if key == "1" then
-			game.scene = "title"
-			titleInput()
-			titleRun()
+		if key == "s" or key == "S" then
+			game.scene.now = "start"
+      game.scene.previous = "title"
+			startInput()
+			startRun()
 		end
-		if key == "2" then
-			game.scene = "options"
+		if key == "o" or key == "O" then
+			game.scene.now = "options"
+      game.scene.previous ="title"
 			optionsInput()
 			optionsRun()
 		end
-		if key == "3" then
-			game.scene = "credits"
+		if key == "c" or key == "C" then
+			game.scene.now = "credits"
+      game.scene.previous = "title"
 			creditsInput()
 			creditsRun()
 		end
-		if key == "4" then
-			game.scene = "quit"
+		if key == "q" or key == "Q" then
+			game.scene.now = "quit"
+      game.scene.previous = "title"
 			quitInput()
 			quitRun()
 		end
@@ -57,6 +48,12 @@ end -- titleInput
 
 function titleRun()
 	-- anything to run on scene load
+  if game.bgm.title:isPlaying() then
+    -- do stuff
+  else
+    love.audio.stop( )
+    game.bgm.title:play()
+  end
 end -- titleRun
 
 function titleUpdate()
@@ -66,13 +63,15 @@ end -- titleUpdate
 
 function titleDraw()
 	-- this scene's draws
+  love.graphics.setColor( color.white ) -- reset color
+  love.graphics.draw(game.bgart.title, 0, 0)
 
-	-- fill full window with background color
-	love.graphics.setColor( color.darkgrey )
-	love.graphics.rectangle("fill", 0, 0, width, height)
-
-	local text = "\nTITLE SCENE\n\nThis is the title scene. Imagine some fancy logo here.\n"
-	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
-
+  local menuOptions = {
+    [1] = "^W[^yS^W]tart game",
+    [2] = "^W[^yO^W]ptions",
+    [3] = "^W[^yC^W]redits",
+    [4] = "^W[^yQ^W]uit"
+  }
+  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.3 ", 100, 18, 29, color.brightblue, color.blue)
 
 end -- titleDraw
