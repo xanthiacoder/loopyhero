@@ -14,6 +14,8 @@ local areaData = {
 
 function equipingLoad()
 	-- all the one-time things that need to load for title scene
+  game.bgm.equiping = love.audio.newSource("bgm/Equiping-Sample.ogg", "stream")
+  game.bgm.equiping:setLooping(true)
 end -- titleLoad()
 
 
@@ -25,20 +27,33 @@ function equipingInput()
 			love.window.setFullscreen(fullscreen, "exclusive")
 		end
 
-        -- for switching scenes
-        if key == "escape" then
-          game.scene.now = "title"
-          game.scene.previous = "equiping"
-          titleInput()
-          titleRun()
-        end
+    -- for switching scenes
+    if key == "escape" then
+      game.scene.now = "title"
+      game.scene.previous = "equiping"
+      titleInput()
+      titleRun()
+    end
+
+    if key == "e" or key == "E" then
+			game.scene.now = "exploring"
+			game.scene.previous = "equiping"
+      exploringInput()
+			exploringRun()
+		end
 
 
-	end
+  end
 end -- titleInput
 
 function equipingRun()
 	-- anything to run on scene load
+  if game.bgm.equiping:isPlaying() then
+    -- do stuff
+  else
+    love.audio.stop( )
+    game.bgm.equiping:play()
+  end
 end -- titleRun
 
 function equipingUpdate()
@@ -56,6 +71,6 @@ function equipingDraw()
 	local text = "\nEQUIPING SCENE\n\nAdventure starts from a safe area.\n"
 	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
 
-  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 26, 30, color.black)
+  drawTextColor(" ^w[^yE^w] Go to ^yE^wxploring  ^w[^yescape^w] Return to menu ", 55, 36, 50, color.black)
 
 end -- titleDraw

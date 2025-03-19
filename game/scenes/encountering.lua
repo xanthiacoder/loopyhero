@@ -3,8 +3,9 @@
 
 function encounteringLoad()
 	-- all the one-time things that need to load for title scene
+  game.bgm.encountering = love.audio.newSource("bgm/Encountering-DanaRoskvist.ogg", "stream")
+  game.bgm.encountering:setLooping(true)
 end -- titleLoad()
-
 
 function encounteringInput()
 	-- this scene's input mapping
@@ -14,9 +15,21 @@ function encounteringInput()
 			love.window.setFullscreen(fullscreen, "exclusive")
 		end
 
+        -- for switching scenes
 		if key == "escape" then
-			love.event.quit()
+			game.scene.now = "title"
+			game.scene.previous = "encountering"
+      titleInput()
+			titleRun()
 		end
+
+    if key == "e" or key == "E" then
+			game.scene.now = "exchanging"
+			game.scene.previous = "encountering"
+      exchangingInput()
+			exchangingRun()
+		end
+
 
 		-- for testing HP bars
 		if key == "a" then
@@ -30,33 +43,17 @@ function encounteringInput()
 			end
 		end
 
-		-- for switching scenes
-		if key == "1" then
-			game.scene = "title"
-			titleInput()
-			titleRun()
-		end
-		if key == "2" then
-			game.scene = "settings"
-			settingsInput()
-			settingsRun()
-		end
-		if key == "3" then
-			game.scene = "credits"
-			creditsInput()
-			creditsRun()
-		end
-		if key == "4" then
-			game.scene = "quit"
-			quitInput()
-			quitRun()
-		end
-
 	end
 end -- titleInput
 
 function encounteringRun()
 	-- anything to run on scene load
+  if game.bgm.encountering:isPlaying() then
+    -- do stuff
+  else
+    love.audio.stop( )
+    game.bgm.encountering:play()
+  end
 end -- titleRun
 
 function encounteringUpdate()
@@ -71,8 +68,9 @@ function encounteringDraw()
 	love.graphics.setColor( color.darkgrey )
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
-	local text = "\nTITLE SCENE\n\nThis is the title scene. Imagine some fancy logo here.\n"
+	local text = "\nENCOUNTER SCENE\n\nThis is the encounter scene. Imagine some combat here.\n"
 	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
 
+  drawTextColor(" ^w[^yE^w] Go to ^yE^wxchanging  ^w[^yescape^w] Return to menu ", 55, 36, 50, color.black)
 
 end -- titleDraw

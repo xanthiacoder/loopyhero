@@ -107,7 +107,7 @@ charData = {
 
 game = {}
 game.power = {}
-game.tooltip = "love-ansi library, Xanthia Coder 2025 | 1280x720, 160x38 chars, font 14pt - "
+game.tooltip = " -= Made with LOVE2D, for LOVEJAM 2025 =-"
 
 game.bgm = {}
 game.bgart = {}
@@ -199,8 +199,6 @@ function love.load()
 	-- load monospace font, recommended size 13, declared in lib.ansi
 	monoFont = love.graphics.newFont("fonts/"..FONT, FONT_SIZE)
 	love.graphics.setFont( monoFont )
-	love.graphics.setColor( color.brightcyan )
-	game.tooltip = game.tooltip .. monoFont:getHeight() .. " height in px"
 
 	-- load all scenes
 	titleLoad()

@@ -71,6 +71,7 @@ function titleDraw()
 	-- this scene's draws
   love.graphics.setColor( color.white ) -- reset color
   love.graphics.draw(game.bgart.title, 0, 0)
+  drawTextColor("^rIDLE CHAMPION ^wOF THE ^yCOFFEEMUD ^wGRIND", 30, 30, 50, color.black)
 
   local menuOptions = {
     [1] = "^W[^yS^W]tart game",
@@ -80,5 +81,6 @@ function titleDraw()
     [5] = "^W[^yQ^W]uit",
   }
   drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.5 ", 100, 18, 31, color.brightblue, color.blue)
+
 
 end -- titleDraw
