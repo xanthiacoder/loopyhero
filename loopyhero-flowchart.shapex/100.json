@@ -141,7 +141,7 @@
         "lock_aspect_ratio" : false,
         "position" : "{230, 135}",
         "private_style" : {
-          "fill_color1" : "#FF9300FF"
+          "fill_color1" : "#009051FF"
         },
         "shape" : "rect",
         "size" : "{100, 70}",
@@ -169,7 +169,10 @@
         "is_relative" : false,
         "is_template" : false,
         "lock_aspect_ratio" : false,
-        "position" : "{380, 35}",
+        "position" : "{380, 135}",
+        "private_style" : {
+          "fill_color1" : "#6388CAFF"
+        },
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,
@@ -196,7 +199,7 @@
         "is_relative" : false,
         "is_template" : false,
         "lock_aspect_ratio" : false,
-        "position" : "{380, 135}",
+        "position" : "{380, 240}",
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,
@@ -223,7 +226,7 @@
         "is_relative" : false,
         "is_template" : false,
         "lock_aspect_ratio" : false,
-        "position" : "{380, 240}",
+        "position" : "{380, 345}",
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,
@@ -250,7 +253,7 @@
         "is_relative" : false,
         "is_template" : false,
         "lock_aspect_ratio" : false,
-        "position" : "{380, 345}",
+        "position" : "{380, 450}",
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,
@@ -277,7 +280,10 @@
         "is_relative" : false,
         "is_template" : false,
         "lock_aspect_ratio" : false,
-        "position" : "{380, 455}",
+        "position" : "{380, 35}",
+        "private_style" : {
+          "fill_color1" : "#FF9300FF"
+        },
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,

@@ -259,6 +259,64 @@ function creationInput()
 			titleRun()
 		end
 
+    -- 8th : go to Enhancing or redo
+    if nameEntry and raceEntry and genderEntry and statsEntry and classEntry and alignmentEntry and inclinationEntry then
+      -- next scene or redo
+      if key == "s" or key == "S" then
+        -- goto enhancing
+        game.scene.now = "enhancing"
+        game.scene.previous = "creation"
+        enhancingInput()
+        enhancingRun()
+      end
+      if key == "r" or key == "R" then
+        -- clear data and start again
+        nameEntry = false
+        charData.name = ""
+        raceEntry = false
+        charData.race = ""
+        raceSelected = 1
+        genderEntry = false
+        charData.gender = ""
+        statsEntry = false
+        statPoints = 56
+        charData.str = 3 -- strength
+        charData.maxstr = 18
+        charData.int = 3 -- intelligence
+        charData.maxint = 18
+        charData.dex = 3 -- dexterity
+        charData.maxdex = 18
+        charData.con = 3 -- constitution
+        charData.maxcon = 18
+        charData.cha = 3 -- charisma
+        charData.maxcha = 18
+        charData.wis = 3 -- wisdom
+        charData.maxwis = 18
+        charData.atk = 0 -- attack points
+        charData.dmg = 0 -- damage points
+        charData.pracs = 0 -- practice points
+        charData.trains = 0 -- train points
+        charData.hp = 0 -- health
+        charData.hpmax = 0
+        charData.mn = 0 -- mana
+        charData.mnmax = 0
+        charData.mv = 0 -- movement
+        charData.mvmax = 0
+        charData.height = 0
+        charData.weight = 0
+        charData.xpgain = 100 -- earned experience rate in percentage
+        classEntry = false
+        charData.class = ""
+        classSelected = 1
+        alignmentEntry = false
+        charData.alignment = 0
+        alignmentSelected = 1
+        inclinationEntry = false
+        charData.inclination = 0
+        inclinationSelected = 1
+      end
+    end
+
     -- 7th : inclination entry
 
     if nameEntry and raceEntry and genderEntry and statsEntry and classEntry and alignmentEntry and inclinationEntry == false then
@@ -633,6 +691,13 @@ function creationDraw()
     if nameEntry and raceEntry and genderEntry and statsEntry and classEntry and alignmentEntry and inclinationEntry == false then
       drawScrollList("", inclinationList, "^w[^yUP/DOWN^w] Select inclination ", inclinationSelected, 60, 19, 40, color.brightblue, color.blue)
       drawTextBox("Your social order inclination is rated from Lawful to Chaotic, with Lawful representing cultural acceptance and social order, Chaotic representing heightened importance on free will and rule fluidity, and Moderate representing the balance between Lawful and Chaotic.\n\n(Currently does not impact much in this game version)", 60, 1, 40, 15, color.white, color.blue, "left")
+    end
+
+    -- 8th : go to Enhancing or redo
+    if nameEntry and raceEntry and genderEntry and statsEntry and classEntry and alignmentEntry and inclinationEntry then
+      -- next scene or redo
+      drawTextBox("Your character is ready! Are you ready to start your adventure?", 60, 1, 40, 10, color.white, color.blue, "left")
+      drawTextColor(" ^w[^yS^w]tart adventure  [^yR^w]edo character ", 60, 12, 40, color.black)
     end
 
 

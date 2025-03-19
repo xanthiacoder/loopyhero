@@ -38,7 +38,7 @@ function startRun()
     creationRun()
 	else
 		-- go to equiping
-    game.scene.now = "equiping"
+    game.scene.now = "enhancing"
     game.scene.previous = "start"
     equipingInput()
     equipingRun()

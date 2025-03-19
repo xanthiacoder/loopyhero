@@ -3,7 +3,7 @@
 
 function titleLoad()
 	-- all the one-time things that need to load for title scene
-  game.bgm.title = love.audio.newSource("bgm/Title.ogg", "static")
+  game.bgm.title = love.audio.newSource("bgm/Title.ogg", "stream")
   game.bgm.title:setLooping(true)
   game.bgart.title = love.graphics.newImage("bgart/title.jpg")
 end -- titleLoad()
@@ -79,6 +79,6 @@ function titleDraw()
     [4] = "^W[^yC^W]redits",
     [5] = "^W[^yQ^W]uit",
   }
-  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.4 ", 100, 18, 31, color.brightblue, color.blue)
+  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.5 ", 100, 18, 31, color.brightblue, color.blue)
 
 end -- titleDraw

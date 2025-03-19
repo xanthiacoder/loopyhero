@@ -3,6 +3,8 @@
 
 function enhancingLoad()
 	-- all the one-time things that need to load for title scene
+  game.bgm.enhancing = love.audio.newSource("bgm/Enhancing-Baroo.ogg", "stream")
+  game.bgm.enhancing:setLooping(true)
 end -- titleLoad()
 
 
@@ -14,49 +16,26 @@ function enhancingInput()
 			love.window.setFullscreen(fullscreen, "exclusive")
 		end
 
+    -- for switching scenes
 		if key == "escape" then
-			love.event.quit()
-		end
-
-		-- for testing HP bars
-		if key == "a" then
-			local hit = love.math.random(2)
-			if hit == 1 then
-				punch[love.math.random(7)]:play()
-				game.playerone.hpNow = game.playerone.hpNow - love.math.random(10)
-			else
-				punch[love.math.random(7)]:play()
-				game.playertwo.hpNow = game.playertwo.hpNow - love.math.random(10)
-			end
-		end
-
-		-- for switching scenes
-		if key == "1" then
-			game.scene = "title"
-			titleInput()
+			game.scene.now = "title"
+			game.scene.previous = "enhancing"
+      titleInput()
 			titleRun()
 		end
-		if key == "2" then
-			game.scene = "settings"
-			settingsInput()
-			settingsRun()
-		end
-		if key == "3" then
-			game.scene = "credits"
-			creditsInput()
-			creditsRun()
-		end
-		if key == "4" then
-			game.scene = "quit"
-			quitInput()
-			quitRun()
-		end
+
 
 	end
 end -- titleInput
 
 function enhancingRun()
 	-- anything to run on scene load
+  if game.bgm.enhancing:isPlaying() then
+    -- do stuff
+  else
+    love.audio.stop( )
+    game.bgm.enhancing:play()
+  end
 end -- titleRun
 
 function enhancingUpdate()
@@ -71,8 +50,9 @@ function enhancingDraw()
 	love.graphics.setColor( color.darkgrey )
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
-	local text = "\nTITLE SCENE\n\nThis is the title scene. Imagine some fancy logo here.\n"
+	local text = "\nENHANCING SCENE\n\nThis is the enhancing scene. Imagine some fancy logo here.\n"
 	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
 
+  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 26, 30, color.black)
 
 end -- titleDraw

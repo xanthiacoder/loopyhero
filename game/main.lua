@@ -32,6 +32,7 @@ require "scenes.looping"
 local itemClass = {
   name = "^Wnothing",
   weight = 0,
+  material = "",
   str = 0,
   int = 0,
   dex = 0,
