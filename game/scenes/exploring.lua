@@ -75,6 +75,7 @@ function exploringLoad()
 	-- all the one-time things that need to load for title scene
   game.bgm.exploring = love.audio.newSource("bgm/Exploring-DanaRoskvist.ogg", "stream")
   game.bgm.exploring:setLooping(true)
+  appear = love.audio.newSource("sfx/appear.ogg", "static")
 end -- titleLoad()
 
 
@@ -89,6 +90,7 @@ function exploringInput()
 
     -- for switching scenes
     if key == "escape" then
+      charData.scene = "exploring"
       game.scene.now = "title"
       game.scene.previous = "exploring"
       saveData()
@@ -114,18 +116,26 @@ function exploringInput()
 
     if key == "m" or key == "M" then
       charData.location = 1
+      appear:stop()
+      appear:play()
     end
 
     if key == "g" or key == "G" then
       charData.location = 2
+      appear:stop()
+      appear:play()
     end
 
     if key == "h" or key == "H" then
       charData.location = 3
+      appear:stop()
+      appear:play()
     end
 
     if key == "s" or key == "S" then
       charData.location = 4
+      appear:stop()
+      appear:play()
     end
 
 
@@ -212,11 +222,6 @@ function exploringInput()
 			  encounteringRun()
       end
 
-
-
-
-
-
 	end
 end -- titleInput
 
@@ -236,7 +241,7 @@ function exploringUpdate(dt)
 
   tick = tick + dt
   if tick >= 6 then
-
+    charData.playtime = charData.playtime + 6
     if charData.hp < charData.hpmax then
       charData.hp = charData.hp + math.ceil((charData.str + charData.level)/3)
       if charData.hp > charData.hpmax then
@@ -254,7 +259,7 @@ function exploringDraw()
 	love.graphics.setColor( color.darkgrey )
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
-  drawTextColor(" ^w[^yW^w]orld Map  [^yA^w]rea Map ", 85, 0, 75, color.black)
+  drawTextColor(" ^w[^yW^w]orld Map  [^yA^w]rea Map ", 105, 0, 55, color.black)
   if showMap then
     drawMap(80,2)
   else
@@ -270,9 +275,14 @@ drawTextColor("^c"..areaData[charData.location][1].." ",25, 0, 20, color.black)
 drawTextColor("^y"..charData.coins.." ^Wcoins ",45, 0, 12, color.black)
 drawTextColor("^y"..charData.items.."^W/"..charData.itemsmax.." items ",57, 0, 14, color.black)
 drawTextColor("^y"..charData.load.."^W/"..charData.loadmax.." load ",71, 0, 14, color.black)
+drawTextColor(" ^WPlaytime: ^y"..charData.playtime, 85, 0, 20, color.black)
 drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black, color.brightyellow, charData.xp, xptnl[charData.level])
 
 -- exploring HUD
 drawText("HP: "..charData.hp.."/"..charData.hpmax, 40, 4, 38, color.white, color.brightred, charData.hp, charData.hpmax)
+
+local text = "\n\nYou can rest here in-between battles. Or travel to other areas for different levels of fights. It's all your choice in this open world.\n\n(work in progress)"
+drawTextBox(text, 0, 6, 79, 20, color.brightcyan, color.blue, "center")
+
 
 end -- titleDraw

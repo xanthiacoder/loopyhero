@@ -54,6 +54,28 @@ function encounteringLoad()
 	-- all the one-time things that need to load for title scene
   game.bgm.encountering = love.audio.newSource("bgm/Encountering-DanaRoskvist.ogg", "stream")
   game.bgm.encountering:setLooping(true)
+  punch = {
+	[1] = love.audio.newSource("sfx/punch1.ogg", "static"),
+	[2] = love.audio.newSource("sfx/punch2.ogg", "static"),
+	[3] = love.audio.newSource("sfx/punch3.ogg", "static"),
+	[4] = love.audio.newSource("sfx/punch4.ogg", "static"),
+	[5] = love.audio.newSource("sfx/punch5.ogg", "static"),
+	[6] = love.audio.newSource("sfx/punch6.ogg", "static"),
+	[7] = love.audio.newSource("sfx/punch7.ogg", "static"),
+  }
+  levelup = love.audio.newSource("sfx/levelgain.ogg", "static")
+  groan = love.audio.newSource("sfx/groan.ogg", "static")
+
+  death = {
+    [1] = love.audio.newSource("sfx/death1.ogg", "static"),
+    [2] = love.audio.newSource("sfx/death2.ogg", "static"),
+    [3] = love.audio.newSource("sfx/death3.ogg", "static"),
+    [4] = love.audio.newSource("sfx/death4.ogg", "static"),
+    [5] = love.audio.newSource("sfx/death5.ogg", "static"),
+    [6] = love.audio.newSource("sfx/death6.ogg", "static"),
+    [7] = love.audio.newSource("sfx/death7.ogg", "static"),
+    }
+
 end -- titleLoad()
 
 function encounteringInput()
@@ -66,6 +88,8 @@ function encounteringInput()
 
     -- for switching scenes
 		if key == "escape" then
+      charData.scene = "encountering"
+      saveData()
 			game.scene.now = "title"
 			game.scene.previous = "encountering"
       titleInput()
@@ -73,6 +97,7 @@ function encounteringInput()
 		end
 
     if key == "e" or key == "E" then
+      saveData()
 			game.scene.now = "exchanging"
 			game.scene.previous = "encountering"
       exchangingInput()
@@ -80,6 +105,8 @@ function encounteringInput()
 		end
 
     if key == "f" or key == "F" then
+      charData.xp = charData.xp - (charData.level*10)
+      saveData()
 			game.scene.now = "exploring"
 			game.scene.previous = "encountering"
       exploringInput()
@@ -124,19 +151,25 @@ function encounteringUpdate(dt)
   tick = tick + dt
   if tick >= 3 then -- perform roughly every second
 
+    charData.playtime = charData.playtime + 3
+
     if love.math.random(heroAtk) > mobFighting[4] and mobFighting[2] > 0 then
       mobFighting[2] = mobFighting[2]-(love.math.random(heroDam))
+      punch[love.math.random(1,7)]:play()
     end
 
     if love.math.random(mobAtk) > heroDef and charData.hp > 0 then
       charData.hp = charData.hp - (love.math.random(mobDam))
+      punch[love.math.random(1,7)]:play()
     end
 
     if mobFighting[2] <= 0 then
       -- victory for hero
       charData.xp = charData.xp + math.ceil(mobFighting[7]*(charData.xpgain/100)*(charData.enemy/charData.level))
       if charData.xp > xptnl[charData.level] then
+        levelup:play()
         charData.level = charData.level + 1
+        charData.trains = charData.trains + 1
       end
       charData.coins = charData.coins + mobFighting[8]
       charData.scene = "exploring"
@@ -150,6 +183,7 @@ function encounteringUpdate(dt)
 
     if charData.hp < 0 then
       -- loss for hero
+      groan:play()
       charData.hp = 0
       charData.xp = charData.xp - mobFighting[7]
       charData.scene = "exploring"
@@ -182,6 +216,7 @@ function encounteringDraw()
   drawTextColor("^y"..charData.coins.." ^Wcoins ",45, 0, 12, color.black)
   drawTextColor("^y"..charData.items.."^W/"..charData.itemsmax.." items ",57, 0, 14, color.black)
   drawTextColor("^y"..charData.load.."^W/"..charData.loadmax.." load ",71, 0, 14, color.black)
+  drawTextColor(" ^WPlaytime: ^y"..charData.playtime, 85, 0, 20, color.black)
   drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black, color.brightyellow, charData.xp, xptnl[charData.level])
 
 

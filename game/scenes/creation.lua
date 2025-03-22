@@ -269,6 +269,8 @@ function creationInput()
         charData.location = 1 -- set to mud school
         charData.level = 1
         charData.coins = 0
+        charData.playtime = 0
+        charData.xp = 0
         charData.scene = "enhancing"
         game.scene.now = "enhancing"
         game.scene.previous = "creation"
@@ -637,14 +639,14 @@ function creationDraw()
   drawTextColor("^wXP        : ^y"..charData.xp, 1, 28, 40, color.black)
 
   -- 1st : enter character name
-  if charData.name == "" then -- draw dialogbox for dataentry for charData.name
+  if nameEntry == false then -- draw dialogbox for dataentry for charData.name
     drawBox("", 65, 19, 30, 3, color.white, color.blue, "thick", "")
     drawTextColor("^w| ^yEnter name ^w|", 67, 19, 14, color.blue)
     drawTextColor("^w"..dataString, 67, 20, 26, color.blue)
   end
 
   -- 2nd : choose race
-  if charData.name ~= "" and charData.race == "" then
+  if nameEntry and raceEntry == false then
     drawScrollList("", races, "^w[^yUP/DOWN^w] Select Race ", raceSelected, 60, 19, 40, color.brightblue, color.blue)
     drawTextBox(raceDesc[raceSelected], 60, 1, 40, 15, color.white, color.blue, "left")
 
@@ -659,7 +661,7 @@ function creationDraw()
   end
 
     -- 3rd : gender entry
-    if nameEntry and raceEntry and charData.gender == "" then
+    if nameEntry and raceEntry and genderEntry == false then
 
       drawTextBox("Gender doesn't affect anything in the game (for this version)", 60, 1, 40, 15, color.white, color.blue, "left")
 

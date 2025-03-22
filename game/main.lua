@@ -108,6 +108,7 @@ charData = {
   coins = 0,
   scene = "",
   enemy = 0,
+  playtime = 0,
 }
 
 --[[

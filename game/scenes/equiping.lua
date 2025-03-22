@@ -18,18 +18,6 @@ the weapons rack contains:
       A steel tipped glaive ]]
 
 
-local areaData = {
-  id = "Mud School", -- name of area, eg Mud School
-  desc = "Recommended for new players to explore slowly and get a Mud School Diploma. The cage rooms are also great for quickly leveling to level 6. You may leave for Midgaard anytime, but will not be able to return.", -- general desc of area
-  rooms = 75, -- number of rooms
-  population = 34, -- number of mobs
-  levelLow = 1, -- lowest level mob
-  levelHigh = 6, -- highest level mob
-  levelMid = 1, -- median level of mobs
-  alignment = 50, -- average alignment of mobs in percentage (0 for evil, 50 for neutral, 100 for good)
-  terrain = "city", -- types (water, forest, rocks, jungle, city, mountains, plains, desert, swamp, hills)
-}
-
 function equipingLoad()
 	-- all the one-time things that need to load for title scene
   game.bgm.equiping = love.audio.newSource("bgm/Equiping-Sample.ogg", "stream")
@@ -47,6 +35,8 @@ function equipingInput()
 
     -- for switching scenes
     if key == "escape" then
+      charData.scene = "equiping"
+      saveData()
       game.scene.now = "title"
       game.scene.previous = "equiping"
       titleInput()
@@ -54,6 +44,7 @@ function equipingInput()
     end
 
     if key == "e" or key == "E" then
+      saveData()
 			game.scene.now = "exploring"
 			game.scene.previous = "equiping"
       exploringInput()
@@ -86,8 +77,18 @@ function equipingDraw()
 	love.graphics.setColor( color.darkgrey )
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
-	local text = "\nEQUIPING SCENE\n\nAdventure starts from a safe area.\n"
-	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
+	local text = "\nEQUIPING SCENE\n\nBefore setting off, you want to ensure you are properly equiped for the area you wish to explore. It's all part of good planning.\n\n(work in progress)"
+	drawTextBox(text, 0, 3, 80, 20, color.brightcyan, color.blue, "center")
+
+  -- standard HUD for 5E
+  drawTextColor("^y"..charData.name, 0, 0, 16, color.black)
+  drawTextColor("^WLevel ^y"..charData.level.." ", 16, 0, 9, color.black)
+  drawTextColor("^c"..areaData[charData.location][1].." ",25, 0, 20, color.black)
+  drawTextColor("^y"..charData.coins.." ^Wcoins ",45, 0, 12, color.black)
+  drawTextColor("^y"..charData.items.."^W/"..charData.itemsmax.." items ",57, 0, 14, color.black)
+  drawTextColor("^y"..charData.load.."^W/"..charData.loadmax.." load ",71, 0, 14, color.black)
+  drawTextColor(" ^WPlaytime: ^y"..charData.playtime, 85, 0, 20, color.black)
+  drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black, color.brightyellow, charData.xp, xptnl[charData.level])
 
   drawTextColor(" ^w[^yE^w] Go to ^yE^wxploring  ^w[^yescape^w] Return to menu ", 55, 40, 50, color.black)
 

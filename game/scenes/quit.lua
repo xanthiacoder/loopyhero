@@ -52,5 +52,8 @@ function quitDraw()
   love.graphics.draw(game.bgart.title, 0, 0)
   drawTextColor("^rIDLE CHAMPION ^wOF THE ^yCOFFEEMUD ^wGRIND", 30, 34, 50, color.black)
 
-  drawDialogBox("", "Do you really want to quit?", " [Y]es  [N]o ", 100, 18, color.brightblue, color.blue)
+  local text = "\nThanks to Bo Zimmerman:\n\nFor allowing us to pay tribute to CoffeeMUD, which you can play at coffeemud.net\n\n"
+	drawTextBox(text, 90, 10, 60, 6, color.brightcyan, color.blue, "center")
+
+  drawDialogBox("", "Do you really want to quit?", " [Y]es  [N]o ", 105, 18, color.brightblue, color.blue)
 end -- titleDraw
