@@ -3,8 +3,6 @@
 
 function titleLoad()
 	-- all the one-time things that need to load for title scene
-  game.bgm.title = love.audio.newSource("bgm/Title.ogg", "stream")
-  game.bgm.title:setLooping(true)
   game.bgart.title = love.graphics.newImage("bgart/title.jpg")
 end -- titleLoad()
 
@@ -62,11 +60,11 @@ end -- titleInput
 
 function titleRun()
 	-- anything to run on scene load
-  if game.bgm.title:isPlaying() then
+  if game.bgm.exploring:isPlaying() then
     -- do stuff
   else
     love.audio.stop( )
-    game.bgm.title:play()
+    game.bgm.exploring:play()
   end
 end -- titleRun
 

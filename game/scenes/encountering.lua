@@ -96,14 +96,6 @@ function encounteringInput()
 			titleRun()
 		end
 
-    if key == "e" or key == "E" then
-      saveData()
-			game.scene.now = "exchanging"
-			game.scene.previous = "encountering"
-      exchangingInput()
-			exchangingRun()
-		end
-
     if key == "f" or key == "F" then
       charData.xp = charData.xp - (charData.level*10)
       saveData()
@@ -170,6 +162,54 @@ function encounteringUpdate(dt)
         levelup:play()
         charData.level = charData.level + 1
         charData.trains = charData.trains + 1
+        if charData.class == "Bard" then
+          charData.hpmax = charData.hpmax + ( math.ceil(charData.con/3) + (love.math.random(2,12)) )
+          charData.mnmax = charData.mnmax + ( math.ceil(charData.int/6) + (love.math.random(1,2)) )
+          charData.mvmax = charData.mvmax + ( 5 * math.ceil(charData.str/18) )
+          charData.atk = charData.atk + math.ceil(charData.cha/18)
+        end
+        if charData.class == "Cleric" then
+          -- upgrade  stuff
+          charData.hpmax = charData.hpmax + ( math.ceil(charData.con/3) + (love.math.random(1,10)) )
+          charData.mnmax = charData.mnmax + ( math.ceil(charData.int/4) + (love.math.random(1,4)) )
+          charData.mvmax = charData.mvmax + ( 5 * math.ceil(charData.str/18) )
+          charData.atk = charData.atk + math.ceil(charData.wis/18)
+        end
+        if charData.class == "Commoner" then
+          -- upgrade  stuff
+          charData.hpmax = charData.hpmax + ( math.ceil(charData.con/9) + (love.math.random(1,4)) )
+          charData.mnmax = charData.mnmax + ( math.ceil(charData.int/10) + (love.math.random(1,2)) )
+          charData.mvmax = charData.mvmax + ( 5 * math.ceil(charData.str/18) )
+          charData.atk = charData.atk + math.ceil((charData.wis/18) - 1)
+        end
+        if charData.class == "Druid" then
+          -- upgrade  stuff
+          charData.hpmax = charData.hpmax + ( math.ceil(charData.con/2) + (love.math.random(2,14)) )
+          charData.mnmax = charData.mnmax + ( math.ceil(charData.int/4) + (love.math.random(1,4)) )
+          charData.mvmax = charData.mvmax + ( 5 * math.ceil(charData.str/18) )
+          charData.atk = charData.atk + math.ceil(charData.con/18)
+        end
+        if charData.class == "Fighter" then
+          charData.hpmax = charData.hpmax + ( math.ceil(charData.con/2) + (love.math.random(2,14)) )
+          charData.mnmax = charData.mnmax + ( math.ceil(charData.int/8) + (love.math.random(1,2)) )
+          charData.mvmax = charData.mvmax + ( 7 * math.ceil(charData.str/18) )
+          charData.atk = charData.atk + math.ceil(charData.str/18)
+          -- upgrade  stuff
+        end
+        if charData.class == "Mage" then
+          -- upgrade  stuff
+          charData.hpmax = charData.hpmax + ( math.ceil(charData.con/6) + (love.math.random(1,5)) )
+          charData.mnmax = charData.mnmax + ( math.ceil(charData.int/3) + (love.math.random(1,4)) )
+          charData.mvmax = charData.mvmax + ( 3 * math.ceil(charData.str/18) )
+          charData.atk = charData.atk + math.ceil(charData.int/18)
+        end
+        if charData.class == "Thief" then
+          -- upgrade  stuff
+          charData.hpmax = charData.hpmax + ( math.ceil(charData.con/3) + (love.math.random(1,10)) )
+          charData.mnmax = charData.mnmax + ( math.ceil(charData.int/6) + (love.math.random(1,3)) )
+          charData.mvmax = charData.mvmax + ( 6 * math.ceil(charData.str/18) )
+          charData.atk = charData.atk + math.ceil(charData.dex/18)
+        end
       end
       charData.coins = charData.coins + mobFighting[8]
       charData.scene = "exploring"
@@ -207,7 +247,7 @@ function encounteringDraw()
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
 
-  drawTextColor(" ^w[^yF^w] FLEE! ^w[^yE^w] Go to ^yE^wxchanging  ^w[^yescape^w] Return to menu ", 50, 40, 60, color.black)
+  drawTextColor(" ^w[^yF^w] FLEE!  ^w[^yescape^w] Return to menu ", 50, 40, 60, color.black)
 
   -- standard HUD for 5E
   drawTextColor("^y"..charData.name, 0, 0, 16, color.black)

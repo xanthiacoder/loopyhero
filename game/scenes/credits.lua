@@ -29,11 +29,11 @@ end -- titleInput
 
 function creditsRun()
 	-- anything to run on scene load
-  if game.bgm.title:isPlaying() then
+  if game.bgm.exploring:isPlaying() then
     -- do stuff
   else
     love.audio.stop( )
-    game.bgm.title:play()
+    game.bgm.exploring:play()
   end
 end -- titleRun
 
@@ -49,9 +49,9 @@ function creditsDraw()
 	love.graphics.setColor( color.darkgrey )
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
-	local text = "\nCREDITS SCENE\n\nThis is the credits scene. I would like to thank everyone...\n"
-	drawTextBox(text, 20, 10, 40, 6, color.white, color.grey, "center")
+	local text = "\nMusic by:\n\nDana Roskvist (https://soundcloud.com/danaroskvist)\nBaroo (https://soundcloud.com/baroo599292369)\n\nArt by:\nH.K.\n\nCoding by:\nXanthia (https://github.com/xanthiacoder)\n\nSpecial Thanks to:\nLove2D discord community for their support"
+	drawTextBox(text, 40, 5, 80, 20, color.brightcyan, color.blue, "center")
 
-  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 26, 30, color.black)
+  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 40, 30, color.black)
 
 end -- titleDraw

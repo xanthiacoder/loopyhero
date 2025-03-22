@@ -20,8 +20,6 @@ the weapons rack contains:
 
 function equipingLoad()
 	-- all the one-time things that need to load for title scene
-  game.bgm.equiping = love.audio.newSource("bgm/Equiping-Sample.ogg", "stream")
-  game.bgm.equiping:setLooping(true)
 end -- titleLoad()
 
 
@@ -57,11 +55,11 @@ end -- titleInput
 
 function equipingRun()
 	-- anything to run on scene load
-  if game.bgm.equiping:isPlaying() then
+  if game.bgm.enhancing:isPlaying() then
     -- do stuff
   else
     love.audio.stop( )
-    game.bgm.equiping:play()
+    game.bgm.enhancing:play()
   end
 end -- titleRun
 

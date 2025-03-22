@@ -33,11 +33,11 @@ end -- titleInput
 
 function quitRun()
 	-- anything to run on scene load
-  if game.bgm.title:isPlaying() then
+  if game.bgm.exploring:isPlaying() then
     -- do stuff
   else
     love.audio.stop( )
-    game.bgm.title:play()
+    game.bgm.exploring:play()
   end
 end -- titleRun
 

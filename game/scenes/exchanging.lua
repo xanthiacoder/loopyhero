@@ -3,8 +3,6 @@
 
 function exchangingLoad()
 	-- all the one-time things that need to load for title scene
-  game.bgm.exchanging = love.audio.newSource("bgm/Exchanging-Sample.ogg", "stream")
-  game.bgm.exchanging:setLooping(true)
 end -- titleLoad()
 
 
@@ -41,11 +39,11 @@ end -- titleInput
 
 function exchangingRun()
 	-- anything to run on scene load
-  if game.bgm.exchanging:isPlaying() then
+  if game.bgm.exploring:isPlaying() then
     -- do stuff
   else
     love.audio.stop( )
-    game.bgm.exchanging:play()
+    game.bgm.exploring:play()
   end
 end -- titleRun
 
