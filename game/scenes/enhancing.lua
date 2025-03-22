@@ -1,5 +1,7 @@
 -- all the different inputs for each scene, in functions
 
+local tick = 0 -- timing for regeneration
+
 
 function enhancingLoad()
 	-- all the one-time things that need to load for title scene
@@ -35,6 +37,51 @@ function enhancingInput()
 		end
 
     if key == "r" or key == "R" then
+              -- clear data and start again
+              nameEntry = false
+              charData.name = ""
+              raceEntry = false
+              charData.race = ""
+              raceSelected = 1
+              genderEntry = false
+              charData.gender = ""
+              statsEntry = false
+              statPoints = 56
+              charData.str = 3 -- strength
+              charData.maxstr = 18
+              charData.int = 3 -- intelligence
+              charData.maxint = 18
+              charData.dex = 3 -- dexterity
+              charData.maxdex = 18
+              charData.con = 3 -- constitution
+              charData.maxcon = 18
+              charData.cha = 3 -- charisma
+              charData.maxcha = 18
+              charData.wis = 3 -- wisdom
+              charData.maxwis = 18
+              charData.atk = 0 -- attack points
+              charData.dmg = 0 -- damage points
+              charData.pracs = 0 -- practice points
+              charData.trains = 0 -- train points
+              charData.hp = 0 -- health
+              charData.hpmax = 0
+              charData.mn = 0 -- mana
+              charData.mnmax = 0
+              charData.mv = 0 -- movement
+              charData.mvmax = 0
+              charData.height = 0
+              charData.weight = 0
+              charData.xpgain = 100 -- earned experience rate in percentage
+              classEntry = false
+              charData.class = ""
+              classSelected = 1
+              alignmentEntry = false
+              charData.alignment = 0
+              alignmentSelected = 1
+              inclinationEntry = false
+              charData.inclination = 0
+              inclinationSelected = 1
+
       saveData()
       game.scene.now = "creation"
       game.scene.previous = "enhancing"
@@ -55,8 +102,20 @@ function enhancingRun()
   end
 end -- titleRun
 
-function enhancingUpdate()
+function enhancingUpdate(dt)
 	-- this scene's updates
+
+  tick = tick + dt
+  if tick >= 6 then
+    charData.playtime = charData.playtime + 6
+    if charData.hp < charData.hpmax then
+      charData.hp = charData.hp + math.ceil((charData.str + charData.level)/3)
+      if charData.hp > charData.hpmax then
+        charData.hp = charData.hpmax
+      end
+    end
+    tick = 0
+  end
 
 end -- titleUpdate
 

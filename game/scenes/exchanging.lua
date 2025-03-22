@@ -1,8 +1,12 @@
 -- all the different inputs for each scene, in functions
 
+local tick = 0 -- timing for regeneration
+
 
 function exchangingLoad()
 	-- all the one-time things that need to load for title scene
+  game.bgm.exchanging = love.audio.newSource("bgm/Exchanging-Baroo.ogg", "stream")
+  game.bgm.exchanging:setLooping(true)
 end -- titleLoad()
 
 
@@ -39,16 +43,28 @@ end -- titleInput
 
 function exchangingRun()
 	-- anything to run on scene load
-  if game.bgm.exploring:isPlaying() then
+  if game.bgm.exchanging:isPlaying() then
     -- do stuff
   else
     love.audio.stop( )
-    game.bgm.exploring:play()
+    game.bgm.exchanging:play()
   end
 end -- titleRun
 
-function exchangingUpdate()
+function exchangingUpdate(dt)
 	-- this scene's updates
+
+  tick = tick + dt
+  if tick >= 6 then
+    charData.playtime = charData.playtime + 6
+    if charData.hp < charData.hpmax then
+      charData.hp = charData.hp + math.ceil((charData.str + charData.level)/3)
+      if charData.hp > charData.hpmax then
+        charData.hp = charData.hpmax
+      end
+    end
+    tick = 0
+  end
 
 end -- titleUpdate
 

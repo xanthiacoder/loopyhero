@@ -54,7 +54,28 @@ function optionsInput()
 		if key == "down" and selectedColor < #colorList then -- don't past last item
 			selectedColor = selectedColor + 1
 		end
-	end
+
+    if key == "q" or key == "Q" then
+
+    end
+    if key == "a" or key == "A" then
+
+    end
+    if key == "z" or key == "Z" then
+
+    end
+    if key == "w" or key == "W" then
+
+    end
+    if key == "s" or key == "S" then
+
+    end
+    if key == "x" or key == "X" then
+
+    end
+
+
+  end
 end -- titleInput
 
 function optionsRun()

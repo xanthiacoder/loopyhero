@@ -234,6 +234,11 @@ function exploringRun()
     game.bgm.exploring:play()
   end
 
+  if charData.levelup == true then
+    -- do levelup stuff
+    levelup:play()
+  end
+
 end -- titleRun
 
 function exploringUpdate(dt)
@@ -250,6 +255,7 @@ function exploringUpdate(dt)
     end
     tick = 0
   end
+
 end -- titleUpdate
 
 function exploringDraw()
@@ -281,7 +287,12 @@ drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black,
 -- exploring HUD
 drawText("HP: "..charData.hp.."/"..charData.hpmax, 40, 4, 38, color.white, color.brightred, charData.hp, charData.hpmax)
 
-local text = "\n\nYou can rest here in-between battles. Or travel to other areas for different levels of fights. It's all your choice in this open world.\n\n(work in progress)"
+-- on levelup
+if charData.levelup then
+  drawTextBox("\n You have LEVELED! ", 70, 28, 22, 3, color.white, color.red, "center")
+end
+
+local text = "\n\nYou can rest here in-between battles. Or travel to other areas for different levels of fights. It's all your choice in this open world.\n\nFighting monsters higher level than you will get you more XP, fighting lower will net less.\n\n(work in progress)"
 drawTextBox(text, 0, 6, 79, 20, color.brightcyan, color.blue, "center")
 
 

@@ -118,6 +118,7 @@ function encounteringRun()
   local i = 0
 
   loadData()
+  charData.levelup = false
   charData.scene = "encountering"
   heroAtk = charData.str + charData.atk
   heroDam = (math.ceil(charData.str/6) + charData.dmg)*charData.level
@@ -159,7 +160,7 @@ function encounteringUpdate(dt)
       -- victory for hero
       charData.xp = charData.xp + math.ceil(mobFighting[7]*(charData.xpgain/100)*(charData.enemy/charData.level))
       if charData.xp > xptnl[charData.level] then
-        levelup:play()
+        charData.levelup = true
         charData.level = charData.level + 1
         charData.trains = charData.trains + 1
         if charData.class == "Bard" then

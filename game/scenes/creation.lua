@@ -271,6 +271,7 @@ function creationInput()
         charData.coins = 0
         charData.playtime = 0
         charData.xp = 0
+        charData.levelup = false
         charData.scene = "enhancing"
         game.scene.now = "enhancing"
         game.scene.previous = "creation"
@@ -537,7 +538,7 @@ function creationInput()
     end
 
     -- 2nd : race entry
-    if nameEntry and charData.race == "" and raceEntry == false then
+    if nameEntry and raceEntry == false then
       if key == "up" and raceSelected > 1 then
         raceSelected = raceSelected - 1
       end

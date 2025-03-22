@@ -1,5 +1,8 @@
 -- all the different inputs for each scene, in functions
 
+local tick = 0 -- timing for regeneration
+
+
 --[[
 the weapons rack contains:
       A wooden handled flail
@@ -63,8 +66,21 @@ function equipingRun()
   end
 end -- titleRun
 
-function equipingUpdate()
+function equipingUpdate(dt)
 	-- this scene's updates
+
+  tick = tick + dt
+  if tick >= 6 then
+    charData.playtime = charData.playtime + 6
+    if charData.hp < charData.hpmax then
+      charData.hp = charData.hp + math.ceil((charData.str + charData.level)/3)
+      if charData.hp > charData.hpmax then
+        charData.hp = charData.hpmax
+      end
+    end
+    tick = 0
+  end
+
 
 end -- titleUpdate
 

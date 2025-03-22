@@ -109,6 +109,7 @@ charData = {
   scene = "",
   enemy = 0,
   playtime = 0,
+  levelup = false, -- used to indicate a new levelup
 }
 
 --[[
