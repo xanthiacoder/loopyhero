@@ -61,6 +61,15 @@ function exchangingDraw()
 	local text = "\nEXCHANGE SCENE\n\nThis is the Exchange scene. Buy and sell here.\n"
 	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
 
-  drawTextColor(" ^w[^yE^w] Go to ^yE^wnhancing  ^w[^yescape^w] Return to menu ", 55, 36, 50, color.black)
+  -- standard HUD for 5E
+  drawTextColor("^y"..charData.name, 0, 0, 16, color.black)
+  drawTextColor("^WLevel ^y"..charData.level.." ", 16, 0, 9, color.black)
+  drawTextColor("^c"..areaData[charData.location][1].." ",25, 0, 20, color.black)
+  drawTextColor("^y"..charData.coins.." ^Wcoins ",45, 0, 12, color.black)
+  drawTextColor("^y"..charData.items.."^W/"..charData.itemsmax.." items ",57, 0, 14, color.black)
+  drawTextColor("^y"..charData.load.."^W/"..charData.loadmax.." load ",71, 0, 14, color.black)
+  drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black, color.brightyellow, charData.xp, xptnl[charData.level])
+
+  drawTextColor(" ^w[^yE^w] Go to ^yE^wnhancing  ^w[^yescape^w] Return to menu ", 55, 40, 50, color.black)
 
 end -- titleDraw

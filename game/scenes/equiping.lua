@@ -1,5 +1,23 @@
 -- all the different inputs for each scene, in functions
 
+--[[
+the weapons rack contains:
+      A wooden handled flail
+      A leather whip
+      A throwing spear
+      A sling
+      A wooden mace
+      A pack of 50 bullets
+      A knotted staff
+      A tin dagger
+      A copper axe
+      A steel headed lance
+      A short bow
+      A steel sword
+      A quiver of 10 arrows
+      A steel tipped glaive ]]
+
+
 local areaData = {
   id = "Mud School", -- name of area, eg Mud School
   desc = "Recommended for new players to explore slowly and get a Mud School Diploma. The cage rooms are also great for quickly leveling to level 6. You may leave for Midgaard anytime, but will not be able to return.", -- general desc of area
@@ -71,6 +89,6 @@ function equipingDraw()
 	local text = "\nEQUIPING SCENE\n\nAdventure starts from a safe area.\n"
 	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
 
-  drawTextColor(" ^w[^yE^w] Go to ^yE^wxploring  ^w[^yescape^w] Return to menu ", 55, 36, 50, color.black)
+  drawTextColor(" ^w[^yE^w] Go to ^yE^wxploring  ^w[^yescape^w] Return to menu ", 55, 40, 50, color.black)
 
 end -- titleDraw

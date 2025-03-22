@@ -18,6 +18,7 @@ function quitInput()
 
 		-- for switching scenes
 		if key == "y" or key == "Y" then
+      saveData()
 			love.event.quit()
     end
 		if key == "n" or key == "N" then
@@ -49,6 +50,7 @@ function quitDraw()
 	-- this scene's draws
   love.graphics.setColor( color.white ) -- reset color
   love.graphics.draw(game.bgart.title, 0, 0)
+  drawTextColor("^rIDLE CHAMPION ^wOF THE ^yCOFFEEMUD ^wGRIND", 30, 34, 50, color.black)
 
   drawDialogBox("", "Do you really want to quit?", " [Y]es  [N]o ", 100, 18, color.brightblue, color.blue)
 end -- titleDraw

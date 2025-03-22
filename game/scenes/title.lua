@@ -17,6 +17,14 @@ function titleInput()
 			love.window.setFullscreen(fullscreen, "exclusive")
 		end
 
+    -- for quick debugging (REMOVE WHEN RELEASE!)
+		if key == "0" then
+			game.scene.now = "encountering"
+      game.scene.previous = "title"
+			encounteringInput()
+			encounteringRun()
+		end
+
 		-- for switching scenes
 		if key == "s" or key == "S" then
 			game.scene.now = "start"
@@ -71,7 +79,7 @@ function titleDraw()
 	-- this scene's draws
   love.graphics.setColor( color.white ) -- reset color
   love.graphics.draw(game.bgart.title, 0, 0)
-  drawTextColor("^rIDLE CHAMPION ^wOF THE ^yCOFFEEMUD ^wGRIND", 30, 30, 50, color.black)
+  drawTextColor("^rIDLE CHAMPION ^wOF THE ^yCOFFEEMUD ^wGRIND", 30, 34, 50, color.black)
 
   local menuOptions = {
     [1] = "^W[^yS^W]tart game",
@@ -80,7 +88,7 @@ function titleDraw()
     [4] = "^W[^yC^W]redits",
     [5] = "^W[^yQ^W]uit",
   }
-  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.5 ", 100, 18, 31, color.brightblue, color.blue)
+  drawNoScrollList("", menuOptions, " ^wLoopy Hero v0.0.6 ", 100, 18, 31, color.brightblue, color.blue)
 
 
 end -- titleDraw

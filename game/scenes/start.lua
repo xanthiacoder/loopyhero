@@ -38,10 +38,29 @@ function startRun()
     creationRun()
 	else
 		-- go to equiping
-    game.scene.now = "enhancing"
+    loadData()
+    game.scene.now = charData.scene
     game.scene.previous = "start"
-    equipingInput()
-    equipingRun()
+    if game.scene.now == "exploring" then
+      exploringInput()
+      exploringRun()
+    end
+    if game.scene.now == "encountering" then
+      encounteringInput()
+      encounteringRun()
+    end
+    if game.scene.now == "exchanging" then
+      exchangingInput()
+      exchangingRun()
+    end
+    if game.scene.now == "enhancing" then
+      enhancingInput()
+      enhancingRun()
+    end
+    if game.scene.now == "equiping" then
+      equipingInput()
+      equipingRun()
+    end
   end
 end -- startRun
 

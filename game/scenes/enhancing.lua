@@ -60,6 +60,6 @@ function enhancingDraw()
 	local text = "\nENHANCING SCENE\n\nThis is the enhancing scene. Imagine some fancy logo here.\n"
 	drawTextBox(text, 20, 10, 40, 6, color.brightcyan, color.blue, "center")
 
-  drawTextColor(" ^w[^yE^w] Go to ^yE^wquiping  ^w[^yescape^w] Return to menu ", 55, 36, 50, color.black)
+  drawTextColor(" ^w[^yE^w] Go to ^yE^wquiping  ^w[^yescape^w] Return to menu ", 55, 40, 50, color.black)
 
 end -- titleDraw

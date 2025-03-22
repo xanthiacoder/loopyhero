@@ -264,8 +264,15 @@ function creationInput()
       -- next scene or redo
       if key == "s" or key == "S" then
         -- goto enhancing
+        charData.itemsmax = math.floor((charData.dex+charData.level)*2)
+        charData.loadmax = math.floor(charData.weight * (charData.str/6))
+        charData.location = 1 -- set to mud school
+        charData.level = 1
+        charData.coins = 0
+        charData.scene = "enhancing"
         game.scene.now = "enhancing"
         game.scene.previous = "creation"
+        saveData()
         enhancingInput()
         enhancingRun()
       end
@@ -702,7 +709,7 @@ function creationDraw()
 
 
 
-  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 36, 30, color.black)
+  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 40, 30, color.black)
 
 
 end -- titleDraw

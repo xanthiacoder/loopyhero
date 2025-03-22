@@ -103,7 +103,36 @@ charData = {
   feet = itemClass,
   wield = itemClass,
   held = itemClass,
+  location = 1, -- 1 is Mud School
+  level = 1,
+  coins = 0,
+  scene = "",
+  enemy = 0,
 }
+
+--[[
+Final Scope (id, rooms, population, levellow, levelhigh, alignment)
+"Mud School", 75, 34, 1, 6, neutral
+"Gangland", 70, 92, 7, 13, neutral
+"High Tower", 183, 109, 14, 22, neutral
+"Sands of Sorrow", 130, 27, 23, 30, neutral
+
+]]
+
+areaData = {
+  [1]  = {"Mud School", 75, 34, 1, 6, neutral },
+  [2]  = {"Gangland", 70, 92, 7, 13, neutral},
+  [3]  = {"High Tower", 183, 109, 14, 22, evil},
+  [4]  = {"Sands of Sorrow", 130, 27, 23, 30, neutral},
+}
+
+-- XP to next level, map only up to level 31
+xptnl = {
+  500, 1100, 1800, 2600, 3500, 4500, 5600, 6800, 8100, 9500,
+  11000, 12600, 14300, 16100, 18000, 20000, 22100, 24300, 26600, 29000,
+  31500, 34100, 36800, 39600, 42500, 45500, 48600, 51800, 55100, 58500,
+}
+
 
 game = {}
 game.power = {}
@@ -164,6 +193,24 @@ end
 	end
 -- end : load autosaves
 
+
+function saveData()
+  -- user to save all data
+  local f = io.open(love.filesystem.getSaveDirectory().."//char/data.txt", "w+")
+  local tempData = json.encode(charData)
+  f:write(tempData)
+  f:close()
+
+end -- saveData
+
+
+function loadData()
+  -- user to save load data
+  tempData = love.filesystem.read("char/data.txt")
+  charData = json.decode(tempData)
+end -- saveData
+
+
 -- requires lib.ansi
 game.keyboard = {
 	show = false,
@@ -182,17 +229,6 @@ game.list = {
 	confirm = false, 	-- state of list window
 }
 
-game.playerone = {
-	hpMax = 100,
-	hpNow = 100,
-	hpBefore = 100,
-}
-
-game.playertwo = {
-	hpMax = 100,
-	hpNow = 100,
-	hpBefore = 100,
-}
 
 -- one-time setup of game / app, loading assets
 function love.load()
@@ -234,31 +270,31 @@ function love.update(dt)
     titleRun()
     game.scene.previous = "title" -- finish first run on game launch
   elseif game.scene.now == "title" then
-		titleUpdate()
+		titleUpdate(dt)
 	elseif game.scene.now == "options" then
-		optionsUpdate()
+		optionsUpdate(dt)
 	elseif game.scene.now == "achievements" then
-		achievementsUpdate()
+		achievementsUpdate(dt)
 	elseif game.scene.now == "credits" then
-		creditsUpdate()
+		creditsUpdate(dt)
 	elseif game.scene.now == "quit" then
-		quitUpdate()
+		quitUpdate(dt)
 	elseif game.scene.now == "start" then
-		startUpdate()
+		startUpdate(dt)
 	elseif game.scene.now == "creation" then
-		creationUpdate()
+		creationUpdate(dt)
 	elseif game.scene.now == "equiping" then
-		equipingUpdate()
+		equipingUpdate(dt)
 	elseif game.scene.now == "exploring" then
-		exploringUpdate()
+		exploringUpdate(dt)
 	elseif game.scene.now == "encountering" then
-		encounteringUpdate()
+		encounteringUpdate(dt)
 	elseif game.scene.now == "exchanging" then
-		exchangingUpdate()
+		exchangingUpdate(dt)
 	elseif game.scene.now == "enhancing" then
-		enhancingUpdate()
+		enhancingUpdate(dt)
   elseif game.scene.now == "looping" then
-		loopingUpdate()
+		loopingUpdate(dt)
   end
 end
 
