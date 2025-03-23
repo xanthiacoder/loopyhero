@@ -264,6 +264,7 @@ function creationInput()
       -- next scene or redo
       if key == "s" or key == "S" then
         -- goto enhancing
+        charData.charscreated = charData.charscreated + 1
         charData.itemsmax = math.floor((charData.dex+charData.level)*2)
         charData.loadmax = math.floor(charData.weight * (charData.str/6))
         charData.location = 1 -- set to mud school
@@ -284,6 +285,7 @@ function creationInput()
       end
       if key == "r" or key == "R" then
         -- clear data and start again
+        charData.charscreated = charData.charscreated + 1
         nameEntry = false
         charData.name = ""
         raceEntry = false

@@ -151,6 +151,10 @@ function encounteringRun()
   local i = 0
   game.message = ""
   loadData()
+  if charData.enemy > charData.level then
+    if charData.foughthigher == nil then charData.foughthigher = 0 end
+    charData.foughthigher = charData.foughthigher + 1
+  end
   charData.levelup = false
   charData.scene = "encountering"
   heroAtk = charData.str + charData.atk
@@ -205,10 +209,14 @@ function encounteringUpdate(dt)
       game.message = " ^wYou ^yWIN ^wthe fight! ^WXP "..charData.xp.." -> "
       charData.mobskilled = charData.mobskilled + 1
       charData.xp = charData.xp + math.ceil(mobFighting[7]*(charData.xpgain/100)*(charData.enemy/charData.level))
+      charData.xprate = math.ceil(charData.xp / (charData.playtime/60))
       game.message = game.message .. charData.xp
       if charData.xp > xptnl[charData.level] then
         charData.levelup = true
         charData.level = charData.level + 1
+        if charData.level == 5 then charData.reached5 = charData.playtime end
+        if charData.level == 10 then charData.reached10 = charData.playtime end
+        if charData.level == 20 then charData.reached20 = charData.playtime end
         if charData.level == 31 then charData.reached31 = charData.playtime end
         charData.trains = charData.trains + 1
         if charData.class == "Bard" then
@@ -260,6 +268,9 @@ function encounteringUpdate(dt)
           charData.atk = charData.atk + math.ceil(charData.dex/18)
         end
       end
+      if charData.totalcoinsearned == nil then charData.totalcoinsearned = 0 end
+      charData.totalcoinsearned = charData.totalcoinsearned + mobFighting[8]
+      charData.coinrate = math.ceil(charData.totalcoinsearned / (charData.playtime/60))
       charData.coins = charData.coins + mobFighting[8]
       charData.scene = "exploring"
       charData.enemy = 0
@@ -277,6 +288,7 @@ function encounteringUpdate(dt)
       groan:play()
       charData.hp = 0
       charData.xp = charData.xp - mobFighting[7]
+      charData.xprate = math.ceil(charData.xp / (charData.playtime/60))
       charData.scene = "exploring"
       charData.enemy = 0
       saveData()

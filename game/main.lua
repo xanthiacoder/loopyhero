@@ -122,8 +122,16 @@ charData = {
   deaths = 0,
   fled = 0,
   drankpots = 0,
+  reached5 = 0,
+  reached10 = 0,
+  reached20 = 0,
   reached31 = 0,
   mobskilled = 0,
+  totalcoinsearned = 0,
+  coinrate = 0,
+  xprate = 0,
+  charscreated = 0,
+  foughthigher = 0,
 }
 
 --[[
