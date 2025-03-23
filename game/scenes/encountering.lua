@@ -98,6 +98,7 @@ function encounteringInput()
 
     if key == "f" or key == "F" then
       charData.xp = charData.xp - (charData.level*10)
+      charData.fled = charData.fled + 1
       saveData()
 			game.scene.now = "exploring"
 			game.scene.previous = "encountering"
@@ -107,6 +108,8 @@ function encounteringInput()
 
     -- drink hp potion [Z X C]
     if (key == "z" or key == "Z") and charData.smallhppot ~= 0 and charData.hp < charData.hpmax then
+      if charData.drankpots == nil then charData.drankpots = 0 end
+      charData.drankpots = charData.drankpots + 1
       charData.smallhppot = charData.smallhppot - 1
       charData.items = charData.items - 1
       charData.hp = charData.hp + 10
@@ -115,6 +118,8 @@ function encounteringInput()
       gulp:play()
     end
     if (key == "x" or key == "X") and charData.medhppot ~= 0 and charData.hp < charData.hpmax then
+      if charData.drankpots == nil then charData.drankpots = 0 end
+      charData.drankpots = charData.drankpots + 1
       charData.medhppot = charData.medhppot - 1
       charData.items = charData.items - 1
       charData.hp = charData.hp + 30
@@ -123,6 +128,8 @@ function encounteringInput()
       gulp:play()
     end
     if (key == "c" or key == "C") and charData.largehppot ~= 0 and charData.hp < charData.hpmax then
+      if charData.drankpots == nil then charData.drankpots = 0 end
+      charData.drankpots = charData.drankpots + 1
       charData.largehppot = charData.largehppot - 1
       charData.items = charData.items - 1
       charData.hp = charData.hp + 50
@@ -196,11 +203,13 @@ function encounteringUpdate(dt)
     if mobFighting[2] <= 0 then
       -- victory for hero
       game.message = " ^wYou ^yWIN ^wthe fight! ^WXP "..charData.xp.." -> "
+      charData.mobskilled = charData.mobskilled + 1
       charData.xp = charData.xp + math.ceil(mobFighting[7]*(charData.xpgain/100)*(charData.enemy/charData.level))
       game.message = game.message .. charData.xp
       if charData.xp > xptnl[charData.level] then
         charData.levelup = true
         charData.level = charData.level + 1
+        if charData.level == 31 then charData.reached31 = charData.playtime end
         charData.trains = charData.trains + 1
         if charData.class == "Bard" then
           charData.hpmax = charData.hpmax + ( math.ceil(charData.con/3) + (love.math.random(2,12)) )
@@ -263,6 +272,8 @@ function encounteringUpdate(dt)
 
     if charData.hp < 0 then
       -- loss for hero
+      if charData.deaths == nil then charData.deaths = 0 end
+      charData.deaths = charData.deaths + 1
       groan:play()
       charData.hp = 0
       charData.xp = charData.xp - mobFighting[7]

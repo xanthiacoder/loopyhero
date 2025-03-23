@@ -3,6 +3,7 @@
 
 function achievementsLoad()
 	-- all the one-time things that need to load for title scene
+  loadData()
 end -- titleLoad()
 
 
@@ -38,7 +39,7 @@ function achievementsRun()
   end
 end -- titleRun
 
-function achievementsUpdate()
+function achievementsUpdate(dt)
 	-- this scene's updates
 
 end -- titleUpdate
@@ -50,10 +51,21 @@ function achievementsDraw()
 	love.graphics.setColor( color.darkgrey )
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
-	local text = "\nACHIEVEMENTS SCENE\n\nThis is the credits scene. I would like to thank everyone...\n"
-	drawTextBox(text, 20, 10, 40, 6, color.white, color.grey, "center")
+  if charData.deaths == nil then charData.deaths = 0 end
+  drawTextColor(" ^WYou died ^y"..charData.deaths.." ^Wtimes. ", 0, 3, 40, color.black)
+  if charData.fled == nil then charData.fled = 0 end
+  drawTextColor(" ^WYou fled ^y"..charData.fled.." ^Wtimes. ", 0, 4, 40, color.black)
+  if charData.drankpots == nil then charData.drankpots = 0 end
+  drawTextColor(" ^WYou drank ^y"..charData.drankpots.." ^Wpotions. ", 0, 5, 40, color.black)
+  if charData.mobskilled == nil then charData.mobskilled = 0 end
+  drawTextColor(" ^WYou killed ^y"..charData.mobskilled.." ^Wmobs. ", 0, 6, 40, color.black)
 
-  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 26, 30, color.black)
+
+  if charData.reached31 == nil then charData.reached31 = 0 end
+  drawTextColor(" ^WYou reached level 31 in ^y"..charData.reached31.." ^Wseconds. ", 100, 3, 60, color.black)
+
+
+  drawTextColor(" ^w[^yescape^w] Return to menu ", 65, 40, 30, color.black)
 
 
 

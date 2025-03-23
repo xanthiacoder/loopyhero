@@ -15,6 +15,7 @@ function exchangingLoad()
   game.bgm.exchanging = love.audio.newSource("bgm/Exchanging-Baroo.ogg", "stream")
   game.bgm.exchanging:setLooping(true)
   buyconfirm = love.audio.newSource("sfx/buyitem.ogg", "static")
+  cannotbuy = love.audio.newSource("sfx/error.ogg", "static")
 end -- titleLoad()
 
 
@@ -49,28 +50,48 @@ function exchangingInput()
 		end
 
     if key == "return" and charData.items < charData.itemsmax then
-      if buyItem == 1 and charData.coins > 2 then
+
+      if buyItem == 1 then
+        game.message = "^wPotion costs ^y"..2 + math.floor(2*(charData.cha/24)).." ^wcoins."
+      end
+      if buyItem == 2 then
+      game.message = "^wPotion costs ^y"..40 + math.floor(40*(charData.cha/24)).." ^wcoins."
+      end
+      if buyItem == 3 then
+        game.message = "^wPotion costs ^y"..80 + math.floor(80*(charData.cha/24)).." ^wcoins."
+      end
+
+      if buyItem == 1 and charData.coins >= 2 then
         buyconfirm:stop()
         buyconfirm:play()
         charData.smallhppot = charData.smallhppot + 1
         charData.items = charData.items + 1
         charData.coins = charData.coins - 2 + math.floor(2*(charData.cha/24))
+      else
+        cannotbuy:stop()
+        cannotbuy:play()
       end
 
-      if buyItem == 2 and charData.coins > 40 then
+      if buyItem == 2 and charData.coins >= 40 then
         buyconfirm:stop()
         buyconfirm:play()
         charData.medhppot = charData.medhppot + 1
         charData.items = charData.items + 1
         charData.coins = charData.coins - 40 + math.floor(40*(charData.cha/24))
+      else
+        cannotbuy:stop()
+        cannotbuy:play()
       end
 
-      if buyItem == 3 and charData.coins > 80 then
+      if buyItem == 3 and charData.coins >= 80 then
         buyconfirm:stop()
         buyconfirm:play()
         charData.largehppot = charData.largehppot + 1
         charData.items = charData.items + 1
         charData.coins = charData.coins - 80 + math.floor(80*(charData.cha/24))
+      else
+        cannotbuy:stop()
+        cannotbuy:play()
       end
 
     end
@@ -94,6 +115,7 @@ function exchangingUpdate(dt)
 	-- this scene's updates
 
   tick = tick + dt
+
   if tick >= 6 then
     charData.playtime = charData.playtime + 6
     if charData.hp < charData.hpmax then

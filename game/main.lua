@@ -119,6 +119,11 @@ charData = {
   largehppot = 0,
   largemnpot = 0,
   largemvpot = 0,
+  deaths = 0,
+  fled = 0,
+  drankpots = 0,
+  reached31 = 0,
+  mobskilled = 0,
 }
 
 --[[
