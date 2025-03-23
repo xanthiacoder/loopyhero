@@ -272,6 +272,9 @@ function creationInput()
         charData.playtime = 0
         charData.xp = 0
         charData.levelup = false
+        charData.smallhppot = 0
+        charData.medhppot = 0
+        charData.largehppot = 0
         charData.scene = "enhancing"
         game.scene.now = "enhancing"
         game.scene.previous = "creation"

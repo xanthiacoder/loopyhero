@@ -81,6 +81,16 @@ function enhancingInput()
               inclinationEntry = false
               charData.inclination = 0
               inclinationSelected = 1
+              charData.smallhppot = 0
+              charData.smallmnpot = 0
+              charData.smallmvpot = 0
+              charData.medhppot = 0
+              charData.medmnpot = 0
+              charData.medmvpot = 0
+              charData.largehppot = 0
+              charData.largemnpot = 0
+              charData.largemvpot = 0
+              charData.xp = 0
 
       saveData()
       game.scene.now = "creation"
@@ -140,6 +150,8 @@ function enhancingDraw()
   drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black, color.brightyellow, charData.xp, xptnl[charData.level])
 
   drawTextColor(" ^w[^yR^w] Re-create Character ", 80, 3, 40, color.black)
+
+  drawTextColor(game.message, 0, 38, 160, color.black)
 
   drawTextColor(" ^w[^yE^w] Go to ^yE^wquiping  ^w[^yescape^w] Return to menu ", 55, 40, 50, color.black)
 

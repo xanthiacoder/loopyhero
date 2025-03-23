@@ -110,6 +110,15 @@ charData = {
   enemy = 0,
   playtime = 0,
   levelup = false, -- used to indicate a new levelup
+  smallhppot = 0,
+  smallmnpot = 0,
+  smallmvpot = 0,
+  medhppot = 0,
+  medmnpot = 0,
+  medmvpot = 0,
+  largehppot = 0,
+  largemnpot = 0,
+  largemvpot = 0,
 }
 
 --[[
@@ -138,7 +147,8 @@ xptnl = {
 
 game = {}
 game.power = {}
-game.tooltip = " -= Made with LOVE2D, for LOVEJAM 2025 =-"
+game.tooltip = " -=[ Made with LOVE2D, for LOVEJAM 2025 ]=-                         -=[ xanthia.itch.io ]=- "
+game.message = ""
 
 game.bgm = {}
 game.bgart = {}

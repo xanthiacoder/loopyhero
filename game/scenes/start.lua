@@ -38,6 +38,10 @@ function startRun()
     creationRun()
 	else
     loadData()
+    if charData.smallhppot == nil then charData.smallhppot = 0 end
+    if charData.medhppot == nil then charData.medhppot = 0 end
+    if charData.largehppot == nil then charData.largehppot = 0 end
+
     game.scene.now = charData.scene
     game.scene.previous = "start"
     if game.scene.now == "exploring" then

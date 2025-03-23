@@ -58,6 +58,7 @@ end -- titleInput
 
 function equipingRun()
 	-- anything to run on scene load
+  game.message = ""
   if game.bgm.enhancing:isPlaying() then
     -- do stuff
   else
@@ -103,6 +104,8 @@ function equipingDraw()
   drawTextColor("^y"..charData.load.."^W/"..charData.loadmax.." load ",71, 0, 14, color.black)
   drawTextColor(" ^WPlaytime: ^y"..charData.playtime, 85, 0, 20, color.black)
   drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black, color.brightyellow, charData.xp, xptnl[charData.level])
+
+  drawTextColor(game.message, 0, 38, 160, color.black)
 
   drawTextColor(" ^w[^yE^w] Go to ^yE^wxploring  ^w[^yescape^w] Return to menu ", 55, 40, 50, color.black)
 

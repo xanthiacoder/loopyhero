@@ -86,6 +86,9 @@
         "is_template" : false,
         "lock_aspect_ratio" : false,
         "position" : "{100, 345}",
+        "private_style" : {
+          "fill_color1" : "#009051FF"
+        },
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,
@@ -113,6 +116,9 @@
         "is_template" : false,
         "lock_aspect_ratio" : false,
         "position" : "{100, 455}",
+        "private_style" : {
+          "fill_color1" : "#FF9300FF"
+        },
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,
@@ -200,6 +206,9 @@
         "is_template" : false,
         "lock_aspect_ratio" : false,
         "position" : "{380, 240}",
+        "private_style" : {
+          "fill_color1" : "#009051FF"
+        },
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,
@@ -227,6 +236,9 @@
         "is_template" : false,
         "lock_aspect_ratio" : false,
         "position" : "{380, 345}",
+        "private_style" : {
+          "fill_color1" : "#009051FF"
+        },
         "shape" : "rect",
         "size" : "{100, 70}",
         "tag" : 0,

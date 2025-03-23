@@ -76,6 +76,7 @@ function exploringLoad()
   game.bgm.exploring = love.audio.newSource("bgm/Exploring-DanaRoskvist.ogg", "stream")
   game.bgm.exploring:setLooping(true)
   appear = love.audio.newSource("sfx/appear.ogg", "static")
+  gulp = love.audio.newSource("sfx/gulp.ogg", "static")
 end -- titleLoad()
 
 
@@ -137,6 +138,33 @@ function exploringInput()
       appear:stop()
       appear:play()
     end
+
+    -- drink hp potion [Z X C]
+    if (key == "z" or key == "Z") and charData.smallhppot ~= 0 and charData.hp < charData.hpmax then
+      charData.smallhppot = charData.smallhppot - 1
+      charData.items = charData.items - 1
+      charData.hp = charData.hp + 10
+      if charData.hp > charData.hpmax then charData.hp = charData.hpmax end
+      gulp:stop()
+      gulp:play()
+    end
+    if (key == "x" or key == "X") and charData.medhppot ~= 0 and charData.hp < charData.hpmax then
+      charData.medhppot = charData.medhppot - 1
+      charData.items = charData.items - 1
+      charData.hp = charData.hp + 30
+      if charData.hp > charData.hpmax then charData.hp = charData.hpmax end
+      gulp:stop()
+      gulp:play()
+    end
+    if (key == "c" or key == "C") and charData.largehppot ~= 0 and charData.hp < charData.hpmax then
+      charData.largehppot = charData.largehppot - 1
+      charData.items = charData.items - 1
+      charData.hp = charData.hp + 50
+      if charData.hp > charData.hpmax then charData.hp = charData.hpmax end
+      gulp:stop()
+      gulp:play()
+    end
+
 
 
 
@@ -284,8 +312,15 @@ drawTextColor("^y"..charData.load.."^W/"..charData.loadmax.." load ",71, 0, 14, 
 drawTextColor(" ^WPlaytime: ^y"..charData.playtime, 85, 0, 20, color.black)
 drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black, color.brightyellow, charData.xp, xptnl[charData.level])
 
+drawTextColor(game.message, 0, 38, 160, color.black)
+
+
 -- exploring HUD
 drawText("HP: "..charData.hp.."/"..charData.hpmax, 40, 4, 38, color.white, color.brightred, charData.hp, charData.hpmax)
+
+drawTextBox("\n [Z] Drink Small HP Potion : "..charData.smallhppot, 0, 34, 34, 3, color.brightcyan, color.blue, "left")
+drawTextBox("\n [X] Drink Medium HP Potion : "..charData.medhppot, 35, 34, 34, 3, color.brightcyan, color.blue, "left")
+drawTextBox("\n [C] Drink Large HP Potion : "..charData.largehppot, 70, 34, 34, 3, color.brightcyan, color.blue, "left")
 
 -- on levelup
 if charData.levelup then

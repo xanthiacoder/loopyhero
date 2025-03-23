@@ -105,6 +105,32 @@ function encounteringInput()
 			exploringRun()
 		end
 
+    -- drink hp potion [Z X C]
+    if (key == "z" or key == "Z") and charData.smallhppot ~= 0 and charData.hp < charData.hpmax then
+      charData.smallhppot = charData.smallhppot - 1
+      charData.items = charData.items - 1
+      charData.hp = charData.hp + 10
+      if charData.hp > charData.hpmax then charData.hp = charData.hpmax end
+      gulp:stop()
+      gulp:play()
+    end
+    if (key == "x" or key == "X") and charData.medhppot ~= 0 and charData.hp < charData.hpmax then
+      charData.medhppot = charData.medhppot - 1
+      charData.items = charData.items - 1
+      charData.hp = charData.hp + 30
+      if charData.hp > charData.hpmax then charData.hp = charData.hpmax end
+      gulp:stop()
+      gulp:play()
+    end
+    if (key == "c" or key == "C") and charData.largehppot ~= 0 and charData.hp < charData.hpmax then
+      charData.largehppot = charData.largehppot - 1
+      charData.items = charData.items - 1
+      charData.hp = charData.hp + 50
+      if charData.hp > charData.hpmax then charData.hp = charData.hpmax end
+      gulp:stop()
+      gulp:play()
+    end
+
 
 	end
 end -- titleInput
@@ -116,7 +142,7 @@ local heroDam = 0
 function encounteringRun()
 	-- anything to run on scene load
   local i = 0
-
+  game.message = ""
   loadData()
   charData.levelup = false
   charData.scene = "encountering"
@@ -142,6 +168,11 @@ end -- titleRun
 function encounteringUpdate(dt)
 	-- this scene's updates
   tick = tick + dt
+
+  if tick >=2 and tick < 3 then
+    game.message = ""
+  end
+
   if tick >= 3 then -- perform roughly every second
 
     charData.playtime = charData.playtime + 3
@@ -149,16 +180,24 @@ function encounteringUpdate(dt)
     if love.math.random(heroAtk) > mobFighting[4] and mobFighting[2] > 0 then
       mobFighting[2] = mobFighting[2]-(love.math.random(heroDam))
       punch[love.math.random(1,7)]:play()
+      game.message = game.message .. "^wYou ^gHIT! "
+    else
+      game.message = game.message .. "^wYou ^rMISS! "
     end
 
     if love.math.random(mobAtk) > heroDef and charData.hp > 0 then
       charData.hp = charData.hp - (love.math.random(mobDam))
       punch[love.math.random(1,7)]:play()
+      game.message = game.message .. "^wThe mob ^rHITS back! "
+    else
+      game.message = game.message .. "^wThe mob ^gMISSES! "
     end
 
     if mobFighting[2] <= 0 then
       -- victory for hero
+      game.message = " ^wYou ^yWIN ^wthe fight! ^WXP "..charData.xp.." -> "
       charData.xp = charData.xp + math.ceil(mobFighting[7]*(charData.xpgain/100)*(charData.enemy/charData.level))
+      game.message = game.message .. charData.xp
       if charData.xp > xptnl[charData.level] then
         charData.levelup = true
         charData.level = charData.level + 1
@@ -248,8 +287,6 @@ function encounteringDraw()
 	love.graphics.rectangle("fill", 0, 0, width, height)
 
 
-  drawTextColor(" ^w[^yF^w] FLEE!  ^w[^yescape^w] Return to menu ", 50, 40, 60, color.black)
-
   -- standard HUD for 5E
   drawTextColor("^y"..charData.name, 0, 0, 16, color.black)
   drawTextColor("^WLevel ^y"..charData.level.." ", 16, 0, 9, color.black)
@@ -260,9 +297,17 @@ function encounteringDraw()
   drawTextColor(" ^WPlaytime: ^y"..charData.playtime, 85, 0, 20, color.black)
   drawText("XP: "..charData.xp.."/"..xptnl[charData.level], 0, 1, 80, color.black, color.brightyellow, charData.xp, xptnl[charData.level])
 
+  drawTextColor(game.message, 0, 38, 160, color.black)
 
   -- encounter HUD
   drawText("HP: "..charData.hp.."/"..charData.hpmax, 40, 4, 38, color.white, color.brightred, charData.hp, charData.hpmax)
   drawText("Mob HP: "..mobFighting[2].."/"..mobData[charData.enemy][2], 82, 4, 38, color.white, color.brightred, mobFighting[2], mobData[charData.enemy][2])
+
+  drawTextBox("\n [Z] Drink Small HP Potion : "..charData.smallhppot, 0, 34, 34, 3, color.brightcyan, color.blue, "left")
+  drawTextBox("\n [X] Drink Medium HP Potion : "..charData.medhppot, 35, 34, 34, 3, color.brightcyan, color.blue, "left")
+  drawTextBox("\n [C] Drink Large HP Potion : "..charData.largehppot, 70, 34, 34, 3, color.brightcyan, color.blue, "left")
+
+  drawTextColor(" ^w[^yF^w] FLEE!  ^w[^yescape^w] Return to menu ", 50, 40, 60, color.black)
+
 
 end -- titleDraw
