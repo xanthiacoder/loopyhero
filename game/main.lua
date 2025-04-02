@@ -261,6 +261,9 @@ function love.load()
 	monoFont = love.graphics.newFont("fonts/"..FONT, FONT_SIZE)
 	love.graphics.setFont( monoFont )
 
+  if love.filesystem.getInfo( "char/data.txt" ) ~= nil then -- char not created
+    loadData()
+  end
 	-- load all scenes
 	titleLoad()
   optionsLoad()
